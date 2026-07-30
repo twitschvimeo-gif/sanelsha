@@ -1,0 +1,443 @@
+.mdl-table {
+  @include sizeCurve(margin-bottom, medium);
+
+  &__title.atm-heading {
+    margin-bottom: $sizeTiny;
+  }
+
+  &__figure {
+    margin: 0;
+    background: $colorWhite;
+
+    & .mdl-pagination {
+      margin-top: $sizeRegular;
+    }
+  }
+
+  &__figcaption {
+    margin: $sizeBiggerBig 0 $sizeSmallRegular 0;
+
+    & .atm-figcaption {
+      color: rgba($colorBlack, 0.6);
+      font-size: $sizeFontSmall;
+      line-height: $sizeLineHeightSubBase;
+    }
+  }
+
+  &__scroll-area {
+    position: relative;
+    max-width: 100%;
+  }
+
+  &__wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+
+  &__shade-left,
+  &__shade-right {
+    position: absolute;
+    content: ' ';
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    opacity: 0;
+
+    @include transition(opacity);
+  }
+
+  &__shade-right {
+    right: 0;
+
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+
+    .mdl-table--shade-right & {
+      opacity: 1;
+    }
+  }
+
+  &__shade-left {
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+
+    .mdl-table--shade-left & {
+      opacity: 1;
+    }
+  }
+
+  &__shade-bottom {
+    position: absolute;
+    content: ' ';
+    top: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    width: auto;
+    height: 15px;
+    background: linear-gradient(360deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);
+
+    @include transition(opacity);
+  }
+
+  &__table {
+    border-spacing: 0;
+    color: rgba($colorBlack, 0.6);
+    font-size: $sizeFontRegular;
+    line-height: $sizeLineHeightBase;
+    width: 100%;
+  }
+
+  &--first-column-fixed &__table {
+    & .mdl-table__row-header,
+    & .mdl-table__column-header:first-child {
+      background-color: $colorWhite;
+      position: sticky;
+      inset-block-start: 0;
+      inset-inline-start: -0.05rem; /* fix rounding error of Chromium browsers with position: sticky */
+      z-index: 1;
+
+      @include mq($to: large) {
+        /* stylelint-disable-next-line */
+        width: calc(50vw - map-get($grid-margin-gutters, xsmall));
+      }
+
+      div {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* stylelint-disable-next-line */
+        max-width: calc(50vw - 2 * var(--grid-outer-gutters));
+
+        @include mq($from: xlarge) {
+          max-width: calc((#{$sizeWidthContent} - 2 * #{pxToRem($sizeRegular)}) / 2);
+        }
+      }
+    }
+  }
+
+  &__cell.mdl-table__column-header {
+    color: rgba($colorBlack, 1);
+    font-size: $sizeFontTiny;
+    font-family: $fontFamilyBlack;
+    vertical-align: bottom;
+    hyphens: manual;
+    z-index: 1;
+
+    &--sortable {
+      color: $colorCyan;
+      padding-right: 1.25rem;
+
+      .mdl-table--align-right & {
+        padding-right: 1rem;
+      }
+
+      &:first-child {
+        > button {
+          .mdl-table--align-right & {
+            justify-content: flex-start;
+          }
+        }
+      }
+
+      > button {
+        @include blankButton();
+
+        display: flex;
+        font-family: $fontFamilyBlack;
+        align-items: flex-end;
+        width: 100%;
+
+        &:hover {
+          .mdl-table__sort-arrow use {
+            fill: $colorBlack60;
+          }
+        }
+
+        &.mdl-table__column--asc,
+        &.mdl-table__column--desc {
+          .mdl-table__sort-arrow use {
+            fill: $colorBlue;
+          }
+        }
+
+        &.mdl-table__column--desc {
+          .mdl-table__sort-arrow {
+            transform: rotate(180deg);
+          }
+        }
+
+        .mdl-table--align-right & {
+          justify-content: flex-end;
+        }
+      }
+    }
+  }
+
+  &__sort-arrow {
+    width: 1.25rem;
+    height: 1.25rem;
+    min-width: 1.25rem;
+    min-height: 1.25rem;
+
+    use {
+      fill: transparent;
+
+      @include transition(fill);
+    }
+  }
+
+  &__cell {
+    padding: $sizeSmallRegular $sizeRegular;
+    font-family: $fontFamilyBase;
+    vertical-align: top;
+    hyphens: auto;
+    background-color: $colorWhite;
+    font-weight: 400;
+
+    &.mdl-table__row-header,
+    &.mdl-table__cell--highlighted {
+      font-family: $fontFamilyBlack;
+    }
+
+    &.mdl-table__row-header {
+      color: var(--color-text);
+      word-break: auto-phrase;
+    }
+
+    &.mdl-table__cell--highlighted {
+      color: var(--color-accent);
+    }
+  }
+
+  &__body &__row:nth-child(odd) &__cell {
+    background: $colorBg; // background: rgba(0, 0, 0, 0.05);
+  }
+
+  &__cell,
+  &--align-right &__cell:first-child {
+    text-align: left;
+  }
+
+  &--align-right &__cell {
+    text-align: right;
+  }
+
+  &--align-right {
+    .mdl-table__column-header--sortable {
+      > button {
+        text-align: right;
+      }
+
+      .icon {
+        order: -1;
+      }
+
+      &:first-child {
+        > button {
+          text-align: left;
+        }
+
+        .icon {
+          order: 2;
+        }
+      }
+    }
+  }
+
+  ul,
+  ol {
+    margin: 0;
+    list-style: none;
+    hyphens: auto;
+  }
+
+  // Target unordered list
+  ul {
+    padding-left: $sizeLarge;
+
+    > li {
+      margin-bottom: $sizeTiny;
+      position: relative;
+
+      &:before {
+        content: '\2013'; // en dash
+        position: absolute;
+        margin-left: -$sizeLarge;
+      }
+
+      // Nested ul padding
+      ul > li:first-child {
+        padding-top: $sizeTiny;
+      }
+    }
+  }
+
+  // Target ordered list
+  ol {
+    counter-reset: ol-counter;
+    padding-left: $sizeBig;
+
+    > li {
+      counter-increment: ol-counter;
+      margin-bottom: $sizeTiny;
+      position: relative;
+
+      &:before {
+        content: counter(ol-counter, decimal-leading-zero);
+        font-family: $fontFamilyBlack;
+        color: var(--color-accent);
+        position: absolute;
+        margin-left: -$sizeBig;
+      }
+
+      // Prevent nested ul from inheriting ol counter style
+      ul > li {
+        counter-increment: none;
+
+        &:before {
+          content: '\2013'; // reset to dash
+          font-family: inherit;
+          color: inherit;
+          margin-left: -$sizeLarge;
+        }
+      }
+    }
+  }
+
+  ol li > ol {
+    padding-left: 0;
+    margin-top: $sizeTiny;
+  }
+
+  ul li ul li > ul {
+    padding-left: 0;
+  }
+
+  ul li > ol,
+  ol li > ul {
+    padding-left: 0;
+    margin-top: $sizeTiny;
+  }
+
+  /**
+   * Inverted
+   */
+  &--inverted {
+    @include gridBleed($fullwidth: true);
+    @include sizeCurve(padding-top padding-bottom, big);
+
+    background: $colorBg;
+    margin-bottom: 0;
+
+    .mdl-table__title.atm-heading {
+      margin-top: 0;
+      color: $colorBlack;
+
+      &:before {
+        background-color: $colorBlack;
+      }
+    }
+
+    .mdl-table__figure {
+      background: $colorBg;
+    }
+
+    tbody .mdl-table__row:nth-child(odd) .mdl-table__cell {
+      background: $colorWhite;
+    }
+  }
+
+  /**
+   * Full width
+   */
+  &--fullwidth {
+    @include sizeCurve(margin-bottom margin-top, big);
+
+    .mdl-table__figure {
+      @include gridBleed($fullwidth: true);
+    }
+  }
+
+  &--e-directory {
+    margin-bottom: 0;
+
+    @include mq($to: medium) {
+      .mdl-table__table {
+        min-width: pxToRem(calc($sizeBreakpointMedium - 2 * $sizeBig));
+      }
+    }
+
+    .mdl-pagination {
+      scroll-margin-block-end: $sizeBiggerBig;
+    }
+  }
+
+  &--finance {
+    &.mdl-table--white-background,
+    &:has(.mdl-table__cell--highlight-column) {
+      .mdl-table__body .mdl-table__cell,
+      .mdl-table__body .mdl-table__cell {
+        background-color: $colorWhite;
+      }
+    }
+
+    &.mdl-table--align-right {
+      .mdl-table__cell:not(.mdl-table__column-header, .mdl-table__row-header) {
+        font-feature-settings: 'tnum';
+      }
+    }
+
+    .mdl-table__row--bold {
+      .mdl-table__cell {
+        font-family: $fontFamilyBlack;
+        color: $colorBlack;
+      }
+    }
+
+    .mdl-table__row--line-bottom {
+      .mdl-table__cell {
+        border-block-end: 1px solid $colorBlack20;
+      }
+    }
+
+    .mdl-table__row--line-bottom-bold {
+      .mdl-table__cell {
+        border-block-end: 3px solid $colorBlack;
+      }
+    }
+
+    .mdl-table__row--space-top {
+      .mdl-table__cell {
+        /* stylelint-disable-next-line */
+        padding-block-start: calc(3 * $sizeSmallRegular + 1em);
+        /* stylelint-disable-next-line */
+        padding-block-start: calc(3 * $sizeSmallRegular + 1lh);
+      }
+    }
+
+    .mdl-table__row .mdl-table__cell.mdl-table__cell--highlight-column {
+      color: var(--color-accent);
+      background-color: var(--color-accent-soft);
+    }
+
+    .mdl-table__figcaption {
+      margin-block-start: $sizeBiggerBig;
+    }
+  }
+
+  &--first-row-fixed {
+    .mdl-table__head th {
+      position: relative;
+      inset-block-start: 0;
+    }
+
+    &.mdl-table .mdl-table__column-header:first-child {
+      z-index: 3;
+    }
+
+    .mdl-table__shade-bottom {
+      opacity: 1;
+      z-index: 3;
+    }
+  }
+}

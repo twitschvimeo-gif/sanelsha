@@ -1,0 +1,30 @@
+@include foundation-xy-grid-classes(
+  $base-grid: true,
+  $margin-grid: true,
+  $padding-grid: false,
+  $block-grid: false,
+  $collapse: false,
+  $offset: true,
+  $vertical-grid: false,
+  $frame-grid: false
+);
+
+.sg_test-grid .cell {
+  //Test values
+  height: 20px;
+
+  @include sizeCurve(margin-bottom, regular);
+
+  background: #f00;
+}
+
+.sg_fullwidth-test-module-container {
+  background-color: $colorTurqoise;
+
+  @include gridBleed($trailingGutters: false);
+}
+
+// Hack for AEM Stacking Context Issue CZHDEV-2957
+.aem-Grid {
+  position: relative;
+}

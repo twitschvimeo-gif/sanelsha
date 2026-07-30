@@ -1,0 +1,76 @@
+.mdl-social-media-links {
+  padding-top: pxToRem($sizeLarge);
+  padding-bottom: pxToRem($sizeLarge);
+
+  &:not(.mdl-social-media-links--contact) {
+    .atm-heading {
+      font-size: pxToRem($sizeFontTiny);
+      line-height: $sizeLineHeightBase;
+      font-family: $fontFamilyBase;
+      color: $colorBlack60;
+      margin-bottom: 0;
+    }
+  }
+
+  ul {
+    @include resetList();
+    display: flex;
+    padding-top: pxToRem($sizeTiny);
+  }
+
+  &__item {
+    margin-right: pxToRem($sizeTiny);
+
+    a {
+      border-radius: 50%;
+    }
+
+    svg {
+      fill: $colorBlack60;
+    }
+  }
+
+  &--contact {
+    padding: 0;
+
+    ul {
+      padding-top: 0;
+    }
+
+    .mdl-social-media-links__item {
+      .atm-button {
+        background: rgba($colorBlack, 0.2);
+
+        &:hover {
+          background: rgba($colorBlack, 0.4);
+        }
+      }
+
+      img {
+        height: 16px;
+        width: auto;
+      }
+    }
+  }
+
+  @include mq($from: small) {
+    &:not(.mdl-social-media-links--contact) {
+      .atm-heading {
+        font-size: pxToRem($sizeFontSmall);
+        line-height: $sizeLineHeightBigger;
+      }
+    }
+  }
+  @include mq($from: large) {
+    &:not(.mdl-social-media-links--contact) {
+      padding-top: pxToRem($sizeBig);
+      padding-bottom: pxToRem($sizeBig);
+    }
+  }
+  @include mq($from: xlarge) {
+    &:not(.mdl-social-media-links--contact) {
+      padding-top: pxToRem($sizeBiggerBig);
+      padding-bottom: pxToRem($sizeBiggerBig);
+    }
+  }
+}

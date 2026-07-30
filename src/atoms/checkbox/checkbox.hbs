@@ -1,0 +1,28 @@
+<div class="atm-checkbox {{#if strongTitle}}atm-checkbox--strong{{/if}}">
+  <input
+    type="checkbox"
+    id="checkbox-{{id}}{{#if isDisabled}}disabled{{/if}}{{#if isChecked}}checked{{/if}}"
+    name="{{groupName}}"
+    {{#if isDisabled}}disabled{{/if}}
+    {{#if isChecked}}checked{{/if}}
+    value="{{value}}"
+    {{#if hint}}aria-describedby="checkbox-{{id}}__hint"{{/if}}
+    {{#if validation}}data-validation{{/if}}
+    {{#if validation.isRequired}}required{{/if}}
+    {{#each data}}
+      data-{{this.key}}="{{this.value}}"
+    {{/each}}
+  />
+  <label
+    for="checkbox-{{id}}{{#if isDisabled}}disabled{{/if}}{{#if isChecked}}checked{{/if}}"
+
+  >
+    {{label}}
+    <span>
+      <svg class="icon icon--iframe-arrow" focusable="false">
+        <use xlink:href="#check"></use>
+      </svg>
+    </span>
+    {{#if hint}}<p id="checkbox-{{id}}__hint" class="atm-checkbox__hint">{{hint}}</p>{{/if}}
+  </label>
+</div>

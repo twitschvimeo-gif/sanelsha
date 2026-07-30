@@ -1,0 +1,19 @@
+<div class="mdl-context_menu" {{#if domSelector}}{{{domSelector}}}{{/if}}>
+  <div>
+    {{#each lists}}
+      <ul class="mdl-context_menu__list">
+        {{#each items}}
+          {{#if this.isBreak}}
+            <li>
+              <hr class="mdl-context_menu__break" />
+            </li>
+          {{else}}
+            <li data-item-index="{{@index}}">
+              {{> "atoms/context_menu_item/context_menu_item" this}}
+            </li>
+          {{/if}}
+        {{/each}}
+      </ul>
+    {{/each}}
+  </div>
+</div>

@@ -1,0 +1,108 @@
+.mdl-texthighlight {
+  @include sizeCurve(padding, smallerRegular);
+  @include sizeCurve(margin-top margin-bottom, medium);
+
+  .text:last-child :last-child :last-child,
+  & > .mdl-richtext:last-child *:last-child,
+  & > :last-child,
+  .mod-margin--bottom:last-child,
+  .linklist:last-child .mdl-linklist--last {
+    margin-bottom: 0;
+  }
+
+  // unset all changes from --bordered
+  h2.atm-heading--bordered {
+    &:before {
+      display: none;
+      content: '';
+    }
+    position: unset;
+    margin-top: 0;
+    margin-right: unset;
+
+    @include sizeCurve('padding-top', regular);
+  }
+}
+
+@each $key, $val in $tl-color-variations {
+  .#{$key} {
+    .mdl-texthighlight {
+      background-color: #{mix($val, $colorWhite, 5%)};
+
+      .atm-figcaption {
+        color: #{$val};
+      }
+
+      .atm-paragraph {
+        color: #{$val};
+      }
+
+      ul {
+        color: #{$val};
+
+        &.mdl-richtext__benefits {
+          li:before {
+            background-image: url(svg-tickmark($val)); // stylelint-disable-line
+          }
+        }
+      }
+
+      .mdl-quote {
+        cite {
+          color: #{$val};
+        }
+      }
+
+      .atm-heading {
+        color: #{$val};
+      }
+
+      ol {
+        color: #{$val};
+      }
+
+      ol li:before {
+        color: #{$val};
+      }
+
+      &__emphasis {
+        p {
+          color: #{$val};
+        }
+      }
+
+      .mdl-linklist {
+        &__title {
+          color: $val;
+        }
+
+        .atm-linklist_item {
+          color: rgba($val, 1);
+
+          &:hover {
+            color: rgba($colorText, 1);
+          }
+        }
+      }
+
+      .atm-text_link {
+        color: #{$val};
+        border-color: #{$val};
+
+        &:hover {
+          color: $colorBlack;
+        }
+      }
+    }
+  }
+}
+
+.cv-monochrome {
+  .mdl-texthighlight {
+    .mdl-linklist {
+      .atm-linklist_item {
+        color: rgba($colorBlack, 0.6);
+      }
+    }
+  }
+}

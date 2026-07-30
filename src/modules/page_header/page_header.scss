@@ -1,0 +1,314 @@
+$pageHeaderCurves: (
+  ktzhLogoTop: (
+    small: 28px,
+    medium: 10px,
+    large: 2px,
+    xlarge: 0,
+  ),
+  ktzhLogoLeft: (
+    small: 10px,
+    medium: 15px,
+    large: 14px,
+    xlarge: 18px,
+  ),
+  ktzhLogoWidth: (
+    tiny: 54px,
+    xsmall: 68px,
+    small: 84px,
+    medium: 123px,
+    large: 140px,
+    xlarge: 184px,
+  ),
+  closeButtonWidth: (
+    tiny: $sizeSmallRegular,
+    medium: $sizeRegular,
+  ),
+  closeButtonTop: (
+    tiny: $sizeRegular,
+    medium: $sizeLarge,
+  ),
+  pageHeaderMinimalPadding: (
+    tiny: $sizeLarge,
+    medium: $sizeSmallBig,
+  ),
+  pageTitleMinimalHeight: (
+    tiny: 64px,
+    medium: 72px,
+  ),
+  pageHeaderSmallTitle: (
+    tiny: 2px,
+    xsmall: 5px,
+    small: 8px,
+    medium: 6px,
+    large: 7px,
+    xlarge: 13px,
+  ),
+  breadcrumbMarginBottom: (
+    tiny: $sizeSmallRegular,
+    xlarge: $sizeRegular,
+  ),
+  govPlatformPaddingBottom: (
+    tiny: 15rem,
+    small: 20rem,
+    large: 25rem,
+  ),
+);
+
+.mdl-page-header {
+  @include gridBleed($fullwidth: true);
+  @include sizeCurve(padding-top, medium);
+  @include sizeCurve(padding-bottom, medium);
+
+  z-index: $zIndexInner;
+  overflow: visible;
+  position: relative;
+
+  &:not(.cv-inverted) {
+    h1.atm-heading {
+      @include polyFluidSizing(padding-top, map-get($pageHeaderCurves, pageHeaderSmallTitle));
+      @include polyFluidSizing('font-size', map-get($fontSizeCurves, big));
+      @include mq($from: xlarge) {
+        padding-top: 10px; // stylelint-disable-line
+      }
+
+      margin-bottom: 0;
+    }
+  }
+
+  &.cv-inverted {
+    background-color: var(--color-accent);
+  }
+
+  &__close {
+    position: fixed;
+    line-height: $sizeLineHeightBase;
+    color: $colorWhite;
+    z-index: 1;
+
+    @include mq($from: tiny, $to: large) {
+      right: pxToRem($sizeBig);
+      right: calc(#{$sizeBig} + var(--scrollbar-wd)); // stylelint-disable-line
+    }
+    @include mq($from: large) {
+      right: pxToRem($sizeBiggerBig);
+      right: calc(#{$sizeBiggerBig} + var(--scrollbar-wd)); // stylelint-disable-line
+    }
+    @include sizeCurve('top', closeButtonTop, $pageHeaderCurves);
+    @include polyFluidSizing('font-size', map-get($fontSizeCurves, regular));
+
+    .icon {
+      @include sizeCurve('width', closeButtonWidth, $pageHeaderCurves);
+      display: inline-block;
+      vertical-align: middle;
+      top: -2px;
+      left: pxToRem($sizeTiny);
+      position: relative;
+
+      use {
+        fill: $colorWhite;
+      }
+    }
+  }
+
+  &__title.atm-heading {
+    word-break: break-word;
+
+    @include sizeCurve(margin-bottom, medium);
+  }
+
+  &__logo-container {
+    position: relative;
+
+    @include mq($to: small) {
+      @include visuallyhidden();
+    }
+    @include polyFluidSizing('top', map-get($pageHeaderCurves, ktzhLogoTop));
+    @include polyFluidSizing('left', map-get($pageHeaderCurves, ktzhLogoLeft));
+  }
+
+  &__breadcrumb {
+    min-height: 1.5em;
+
+    @include polyFluidSizing('font-size', map-get($fontSizeCurves, regular));
+    @include sizeCurve('margin-bottom', breadcrumbMarginBottom, $pageHeaderCurves);
+
+    span {
+      color: var(--color-text-soft);
+    }
+  }
+
+  &__breadcrumb-angle,
+  &__breadcrumb-backlink {
+    vertical-align: text-top;
+    width: pxToRem($sizeSmallLarge);
+    height: pxToRem($sizeSmallLarge);
+    margin-left: 0;
+
+    @include mq($from: tiny, $to: medium) {
+      margin-left: pxToRem(-1 * $sizeSmallLarge);
+    }
+  }
+
+  &__breadcrumb-backlink use {
+    fill: var(--color-text-soft);
+  }
+
+  .mdl-content_nav {
+    @include sizeCurve(margin-block, medium);
+  }
+
+  .mdl-lead_section {
+    margin-top: 0;
+
+    @include sizeCurve(margin-bottom, medium);
+  }
+
+  .mdl-tag-group {
+    max-width: pxToRem($sizeWidthTextContent);
+
+    @include sizeCurve(margin-bottom, smallerRegular);
+
+    .atm-heading {
+      @include polyFluidSizing('font-size', map-get($fontSizeCurves, tiny));
+      @include mq($from: tiny, $to: medium) {
+        margin-bottom: 0;
+      }
+      @include mq($from: medium) {
+        margin-bottom: pxToRem($sizeMini);
+      }
+    }
+
+    &__tags {
+      margin-bottom: 0;
+
+      @include mq($from: large) {
+        li {
+          margin-right: pxToRem($sizeTiny);
+        }
+      }
+
+      .atm-anchorlink--tag-top {
+        margin-top: pxToRem($sizeTiny);
+        margin-bottom: 0;
+        font-size: pxToRem($sizeFontBiggerRegular);
+
+        @include mq($from: tiny, $to: medium) {
+          padding: 0 pxToRem($sizeSmallRegular);
+          height: pxToRem($sizeBig);
+          line-height: $sizeBig;
+          margin-top: pxToRem($sizeMini);
+        }
+      }
+    }
+  }
+
+  &--minimal {
+    @include sizeCurve(padding-bottom padding-top, pageHeaderMinimalPadding, $pageHeaderCurves);
+    @include sizeCurve(min-height, pageTitleMinimalHeight, $pageHeaderCurves);
+
+    .mdl-page-header__breadcrumb {
+      margin-bottom: 0;
+      min-height: unset;
+
+      .mdl-breadcrumb {
+        display: none;
+      }
+    }
+
+    .mdl-page-header__title {
+      @include polyFluidSizing('font-size', map-get($fontSizeCurves, regular));
+
+      margin-bottom: 0;
+    }
+
+    .mdl-page-header__logo-container {
+      display: none;
+    }
+
+    .lyt-wrapper:first-child {
+      .grid-x:nth-child(1) {
+        @include mq($from: xlarge) {
+          min-height: pxToRem($sizeLarge);
+        }
+      }
+
+      .grid-x:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+
+  &--report {
+    @include sizeCurve('margin-bottom', big);
+
+    &:not(.mdl-page-header--mood-image) {
+      margin-bottom: 0;
+    }
+
+    &.mdl-page-header--mood-image {
+      padding-bottom: 0 !important; // stylelint-disable-line
+      overflow: hidden;
+    }
+
+    .lyt-wrapper {
+      isolation: isolate;
+      z-index: $zIndexInner;
+    }
+  }
+
+  &__report {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-color: transparent !important; // stylelint-disable-line
+
+    @include sizeCurve('padding-bottom', govPlatformPaddingBottom, $pageHeaderCurves);
+  }
+
+  &__mood-image {
+    position: absolute;
+    bottom: 0;
+
+    .mdl-image-figure {
+      margin: 0;
+      width: 100%;
+
+      &__img-wrapper {
+        margin-bottom: 0;
+      }
+
+      img {
+        max-width: none;
+        width: 100%;
+        margin-left: 0;
+        transform: none;
+      }
+    }
+
+    &:after {
+      content: '';
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      display: block;
+      position: absolute;
+      top: 0;
+      background: linear-gradient(180deg, var(--color-accent) 0%, transparent 100%);
+
+      @include mq($from: small) {
+        aspect-ratio: 7 / 3;
+      }
+    }
+  }
+
+  &--e-directory {
+    @include sizeCurve(padding-top, big);
+  }
+
+  .atm-button.atm-button--secondary {
+    &,
+    &:hover,
+    &:focus {
+      color: var(--color-text);
+    }
+  }
+}

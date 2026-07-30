@@ -1,0 +1,11 @@
+<div {{#if texthighlightId}} id="{{texthighlightId}}"{{/if}}class="mdl-texthighlight">
+  {{#if textVariation}}
+  {{> "modules/richtext/richtext"}}
+  {{/if}}
+  {{#if linklistVariation}}
+    {{> "modules/linklist/linklist"}}
+  {{/if}}
+  {{#if imageVariation}}
+    {{> "modules/image_figure/image_figure"}}
+  {{/if}}
+</div>

@@ -1,0 +1,72 @@
+<div class="mdl-stepper" data-init="stepper"{{#if disableScroll}} data-disable-scroll{{/if}}>
+  {{#if title}}<h2 class="atm-heading atm-heading--bordered">{{title}}</h2>{{/if}}
+
+  {{#if navigation}}
+    {{> "modules/stepper_navigation/stepper_navigation" navigation}}
+  {{/if}}
+  <form class="form" data-stepper="form" novalidate action="{{action}}">
+    <div class="mdl-stepper__wrapper form" data-stepper="wrapper" {{#if overlayId}}data-overlay-id="{{overlayId}}"{{/if}}>
+      {{#each steps}}
+        <div class="mdl-stepper__step{{#if page}} mdl-stepper__step-page{{/if}}" data-stepper="step"{{#if endpoint}} data-stepper-endpoint{{/if}} data-step-index="{{@index}}" {{#if rules}}data-rules="{{rules}}"{{/if}}>
+          <div data-stepper="ruleNotificationWrapper"></div>
+          {{#if page}}
+            {{{page}}}
+          {{/if}}
+          {{#unless page}}
+          {{> "modules/form/form" this}}
+          {{/unless}}
+        </div>
+      {{/each}}
+
+      {{#if confirmation}}
+      <div class="mdl-stepper__step" data-stepper="step">
+      {{> "modules/notification/notification" confirmation}}
+      </div>
+      {{/if}}
+    </div>
+
+    <div class="mdl-stepper__last-page-info" data-stepper="lastpage">
+      {{#if toggle}}
+        {{> "atoms/toggle/toggle" toggle}}
+        {{> "atoms/form_input/form_input" replyTo}}
+      {{/if}}
+      {{#if remark}}<div class="mdl-stepper__remark">
+        {{{remark}}}
+      </div>{{/if}}
+    </div>
+    {{#if footerButton}}{{> "atoms/button/button" footerButton }}{{/if}}
+  </form>
+
+  {{#if notificationTemplate}}
+  <div class="mdl-stepper__message"
+    data-stepper="messageWrapper"
+    data-singular-text="Bitte kontrollieren Sie Ihre Angabe für das Feld <%= list %>."
+    data-plural-text="Bitte kontrollieren Sie Ihre Angaben für die folgenden Felder: <%= list %>"
+    data-error-text="Da ist leider etwas schief gegangen! Ihre Angaben konnten leider nicht übermittelt werden. Es tut uns leid. Bitte probieren Sie es erneut oder melden Sie sich bei: Tel.: [XX]"
+  >
+    <script data-stepper="notificationTemplate" type="text/x-handlebars-template">
+      {{{notificationTemplate}}}
+    </script>
+
+  </div>
+  {{/if}}
+
+  {{#if ruleNotification}}
+  <script type="text/x-handlebars-template" data-stepper="ruleNotification">
+    {{> "modules/notification/notification" ruleNotification}}
+  </script>
+  {{/if}}
+
+  {{#unless noControls}}
+  <div class="mdl-stepper__control" data-stepper="control">
+    <button class="atm-button atm-button--secondary mdl-stepper__back" data-stepper="back">Zurück</button>
+    <button class="atm-button mdl-stepper__next" data-stepper="next">Weiter</button>
+    <button class="atm-button mdl-stepper__send" data-stepper="send">
+      <span class="atm-button__text ">
+        Senden
+      </span>
+      <span class="atm-button__spinner"></span>
+    </button>
+  </div>
+  {{/unless}}
+</div>

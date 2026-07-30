@@ -1,0 +1,13 @@
+.mdl-button_group {
+  display: flex;
+
+  @include resetList;
+
+  &__item {
+    margin-right: 2px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.mdl-cta-box {
+  @include sizeCurve(padding, large);
+
+  background-color: var(--color-accent);
+
+  .atm-heading {
+    padding-top: 0;
+  }
+
+  .atm-heading,
+  .atm-paragraph {
+    color: $colorWhite;
+  }
+}

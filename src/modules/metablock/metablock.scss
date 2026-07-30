@@ -1,0 +1,86 @@
+.mdl-metablock {
+  @include sizeCurve(margin-bottom, medium);
+
+  &--margin-bottom {
+    @include sizeCurve(margin-bottom, big);
+  }
+
+  &--margin-top {
+    @include sizeCurve(margin-top, big);
+  }
+
+  &__row {
+    @include mq($from: small) {
+      display: flex;
+
+      .mdl-descriptionlist {
+        flex-grow: 1;
+        flex-basis: 100%;
+        border-bottom: 1px solid rgba($colorBlack, 0.2);
+
+        dd {
+          border: 0;
+
+          .atm-button {
+            float: right;
+            height: $sizeLarge;
+            min-width: $sizeLarge;
+            background: transparent;
+
+            use {
+              @include transition(fill);
+            }
+
+            @include hover() {
+              use {
+                fill: $colorBlack;
+              }
+            }
+          }
+        }
+
+        &:first-child {
+          margin-right: $sizeSmallRegular;
+        }
+
+        &:last-child {
+          margin-left: $sizeSmallRegular;
+        }
+
+        &:only-child {
+          margin: 0;
+        }
+      }
+    }
+
+    // CZHDEV-2318
+    @include mq($to: small) {
+      dd {
+        .atm-button {
+          height: $sizeLarge;
+          min-width: $sizeLarge;
+          background: transparent;
+
+          &__spinner {
+            display: none;
+          }
+        }
+
+        span {
+          display: block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+
+  &__copy-success-notification {
+    margin-top: $sizeMini;
+
+    &--hidden {
+      display: none;
+    }
+  }
+}

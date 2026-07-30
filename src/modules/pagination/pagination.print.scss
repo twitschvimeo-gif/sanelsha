@@ -1,0 +1,20 @@
+.mdl-pagination {
+  .atm-button--secondary {
+    display: none;
+  }
+
+  &__page-count {
+    padding-left: $sizeMini;
+  }
+
+  &__input {
+    width: 2.5rem;
+
+    .atm-form_input__input {
+      border: 0;
+      text-align: right;
+      font-size: $sizeFontSmall;
+      height: 45px;
+    }
+  }
+}

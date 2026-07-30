@@ -1,0 +1,187 @@
+.mdl-search_page {
+  @include sizeCurve(padding-bottom, big);
+
+  position: relative;
+
+  &--loading {
+    position: relative;
+
+    .mdl-pagination {
+      display: none;
+    }
+  }
+
+  .atm-loading_circle {
+    position: relative;
+    min-height: $sizeHuge;
+  }
+
+  &__notification {
+    display: none;
+  }
+
+  &__no-results {
+    display: none;
+
+    h2.atm-heading {
+      line-height: $sizeLineHeightMedium;
+
+      @include polyFluidSizing('font-size', map-get($fontSizeCurves, regular));
+      @include mq($to: xsmall) {
+        line-height: $sizeLineHeightBase;
+      }
+    }
+  }
+
+  &__results-head {
+    @include sizeCurve(margin-bottom, medium);
+  }
+
+  &__date-filter {
+    display: none;
+
+    &--visible {
+      display: block;
+    }
+  }
+
+  &__results-wrapper {
+    @include sizeCurve(margin-top, large);
+  }
+
+  &__counter {
+    font-size: pxToRem($sizeFontTiny);
+    font-family: $fontFamilyBlack;
+    display: block;
+    margin-bottom: 0;
+  }
+
+  &__suggestions {
+    margin-top: $sizeMini;
+  }
+
+  &__results {
+    @include sizeCurve(padding-bottom, small);
+
+    .mdl-service_list__item-title {
+      color: $colorBlack;
+    }
+
+    .mdl-texthighlight {
+      margin-bottom: 1rem;
+
+      .atm-heading {
+        padding-bottom: $sizeTiny;
+        font-family: $fontFamilyBlack;
+      }
+
+      .mdl-linklist {
+        .atm-linklist_item {
+          color: rgba($colorText, 0.6);
+        }
+      }
+    }
+
+    .mdl-person_card {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__list {
+    @include resetList;
+  }
+
+  &__tag-group {
+    @include sizeCurve(margin-top, small);
+  }
+
+  &__autocorrect {
+    display: none;
+  }
+
+  .atm-button--tag {
+    font-size: $sizeFontSmall;
+  }
+
+  .atm-radiobutton {
+    margin-top: $sizeMini;
+  }
+
+  .mdl-search__autosuggest {
+    padding: pxToRem($sizeSmallRegular);
+    margin-bottom: 0;
+    background-color: $colorWhite;
+    position: absolute;
+    width: 100%;
+    z-index: $zIndexDropDowns;
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.3); // stylelint-disable-line
+
+    .atm-content_teaser {
+      padding: pxToRem($sizeTiny) 0;
+    }
+
+    &.initially-hidden {
+      display: none;
+    }
+  }
+
+  &--no-results {
+    .mdl-search__autosuggest {
+      margin-bottom: pxToRem($sizeRegular);
+    }
+
+    .mdl-search_page__no-results {
+      display: block;
+      margin-top: -2rem;
+
+      .atm-button {
+        background-color: transparent;
+        padding-left: 0;
+
+        &:hover {
+          background-color: transparent;
+        }
+
+        .icon {
+          margin: 0;
+        }
+
+        &:active {
+          color: $colorBlack;
+
+          .icon {
+            use {
+              fill: $colorBlack;
+            }
+          }
+        }
+      }
+    }
+
+    .mdl-pagination {
+      display: none;
+    }
+  }
+
+  &--error {
+    .mdl-search__autosuggest {
+      margin-bottom: pxToRem($sizeRegular);
+    }
+
+    .mdl-search_page__notification {
+      display: block;
+    }
+
+    .mdl-search_page__no-results,
+    .mdl-pagination,
+    .mdl-datepicker,
+    .mdl-search_page__results,
+    .mdl-search_page__results-head {
+      display: none;
+    }
+  }
+
+  /**
+   * SPECIAL STYLES FOR THE RESULTS ITEMS
+   */
+}

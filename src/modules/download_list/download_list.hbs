@@ -1,0 +1,20 @@
+
+<div class="mdl-download_list {{#if marginBottom}}mdl-download_list--margin-bottom{{/if}} {{#if isLast}}mdl-download_list--last{{/if}}" data-init="downloadList">
+	{{#if heading}}
+    <h{{heading.level}} class="atm-heading
+      {{#if_compare heading.visualLevel "!==" heading.level}}h{{heading.visualLevel}}{{/if_compare}}
+      {{#if_compare heading.visualLevel "===" 2 }}atm-heading--bordered{{/if_compare}}
+      mdl-download_list__title"
+    >{{heading.title}}</h{{heading.level}}>
+  {{/if}}
+  <ul class="mdl-download_list__list">
+    {{#each links}}
+      <li class="mdl-download_list__item">
+        {{> "atoms/linklist_item/linklist_item" link}}
+        {{#if contextMenu}}
+          {{> "modules/context_menu/context_menu" contextMenu}}
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+</div>

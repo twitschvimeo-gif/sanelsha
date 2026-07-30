@@ -1,0 +1,44 @@
+.mdl-page-header {
+  padding: 0 !important; // stylelint-disable-line
+  margin-bottom: 0 !important; // stylelint-disable-line
+
+  &__logo-container {
+    .atm-logo {
+      position: absolute;
+      top: auto;
+
+      @include polyFluidSizing('margin-top', map-get($sizeCurves, biggerRegular));
+      @include polyFluidSizing('width', map-get($sizeCurves, large));
+      @include polyFluidSizing('height', map-get($sizeCurves, large));
+    }
+  }
+
+  &__title {
+    @include polyFluidSizing('margin-left', map-get($sizeCurves, big));
+  }
+
+  &.cv-inverted {
+    background-color: initial;
+  }
+
+  .atm-heading,
+  .atm-lead,
+  .atm-paragraph,
+  &__breadcrumb,
+  .mdl-breadcrumb__show-context {
+    color: $colorBlack;
+  }
+
+  &__close {
+    display: none;
+  }
+
+  .mdl-service_button,
+  .mdl-tag-group {
+    display: none;
+  }
+
+  &__mood-image {
+    display: none;
+  }
+}

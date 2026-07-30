@@ -1,0 +1,382 @@
+@use 'sass:math';
+
+$decision-tree-curves: (
+  top-shadow: (
+    tiny: 80px,
+    small: 100px,
+    medium: 250px,
+  ),
+);
+$decision-tree-notch-size: pxToRem(48px);
+
+.mdl-decision_tree {
+  @include gridBleed($fullwidth: true);
+  @include sizeCurve(padding-bottom, big);
+
+  background-color: $colorBg;
+  z-index: 1;
+  position: relative;
+  outline: none;
+
+  &__top {
+    @include sizeCurve(margin-top, biggerRegular);
+
+    overflow: hidden;
+    transition: height 0.3s ease-in;
+
+    &--before-show {
+      opacity: 0;
+      position: absolute;
+
+      .mdl-decision_tree__intro,
+      .mdl-decision_tree__navigation {
+        display: block;
+      }
+    }
+
+    &--before-open {
+      height: 0;
+      position: relative;
+      display: block;
+      opacity: 1;
+
+      .mdl-decision_tree__intro,
+      .mdl-decision_tree__navigation {
+        display: block;
+      }
+    }
+
+    &--before-close {
+      height: 0;
+    }
+
+    &--open {
+      .mdl-decision_tree__intro,
+      .mdl-decision_tree__navigation {
+        display: block;
+      }
+    }
+  }
+
+  &__intro {
+    @include sizeCurve(margin-bottom, regular);
+
+    display: none;
+  }
+
+  &__navigation {
+    @include sizeCurve(margin-bottom, regular);
+
+    display: none;
+
+    &-step {
+      display: none;
+      padding: pxToRem($sizeMini) pxToRem($sizeSmallLarge) pxToRem($sizeSmallLarge)
+        pxToRem($sizeSmallLarge);
+      background-color: $colorWhite;
+      margin-bottom: pxToRem($sizeSmallRegular);
+
+      .mdl-descriptionlist {
+        dt {
+          font-family: $fontFamilyBase;
+          color: rgba($colorBlack, 0.6);
+        }
+
+        dd {
+          @include polyFluidSizing('font-size', map-get($fontSizeCurves, small));
+
+          font-family: $fontFamilyBase;
+          color: $colorText;
+          padding-top: pxToRem($sizeMini);
+          padding-bottom: pxToRem($sizeTiny);
+        }
+
+        margin-bottom: pxToRem($sizeRegular);
+      }
+
+      &[data-active='true'] {
+        display: block;
+      }
+    }
+  }
+
+  &__notch {
+    transition: height 0.5s ease, opacity 0.5s;
+    margin-bottom: 0;
+    opacity: 0;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    color: rgba($colorBlack, 0.6);
+    height: 0;
+
+    &-hide-text {
+      display: none;
+    }
+
+    .atm-button {
+      border-radius: 50%;
+      position: absolute;
+      top: calc(100% - math.div($decision-tree-notch-size, 2));
+      left: calc(50% - math.div($decision-tree-notch-size, 2));
+      background-color: $colorBg;
+
+      .icon {
+        &.closed {
+          display: block;
+          width: pxToRem($sizeLarge + 1px);
+          height: pxToRem($sizeLarge + 1px);
+        }
+
+        &.open {
+          display: none;
+          width: pxToRem($sizeRegular);
+          height: pxToRem($sizeRegular);
+        }
+      }
+
+      &:hover {
+        background: $colorBlack10;
+      }
+    }
+
+    &--open {
+      .mdl-decision_tree__notch-show-text {
+        display: none;
+      }
+
+      .mdl-decision_tree__notch-hide-text {
+        display: inline;
+      }
+
+      .atm-button {
+        .icon {
+          &.closed {
+            display: none;
+          }
+
+          &.open {
+            display: block;
+          }
+        }
+      }
+    }
+
+    &:after {
+      @include gridBleed($fullwidth: true);
+      @include sizeCurve(height, top-shadow, $decision-tree-curves);
+
+      content: ' ';
+      position: absolute;
+      background: radial-gradient(
+        farthest-side at 50% -40%,
+        rgba($colorBlack, 0.1),
+        rgba($colorBlack, 0.1) 25%,
+        transparent 100%
+      );
+      top: calc(100%);
+      left: 0;
+      max-width: pxToEm($sizeWidthContent);
+      z-index: -1;
+    }
+  }
+
+  &__next {
+    @include sizeCurve(margin-top, biggerRegular);
+  }
+
+  &--endpoint {
+    .mdl-decision_tree__next {
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+
+  &--in-progress {
+    .mdl-decision_tree__top {
+      margin-bottom: 0;
+    }
+  }
+
+  &--in-progress,
+  &--before-in-progress {
+    .mdl-decision_tree__notch {
+      height: $decision-tree-notch-size;
+      opacity: 1;
+    }
+  }
+
+  &:not(.mdl-decision_tree--in-progress) {
+    .mdl-decision_tree__intro {
+      display: block;
+    }
+  }
+
+  &--anim-slide-out {
+    .mdl-stepper {
+      overflow: hidden;
+
+      .form {
+        animation: slide-out 0.6s ease-in;
+        transform: translateY(-150%);
+      }
+    }
+  }
+
+  &--anim-slide-in {
+    .mdl-stepper {
+      overflow: hidden;
+
+      .form {
+        animation: slide-in 0.6s ease-out;
+        transform: translateY(0%);
+      }
+    }
+  }
+
+  &--anim-fade-in {
+    .mdl-stepper {
+      .form {
+        animation: fade-in 0.4s;
+        opacity: 1;
+      }
+    }
+  }
+
+  @keyframes slide-out {
+    from {
+      transform: translateY(0%);
+    }
+
+    to {
+      transform: translateY(-150%);
+    }
+  }
+  @keyframes slide-in {
+    from {
+      transform: translateY(150%);
+    }
+
+    to {
+      transform: translateY(0%);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  &__result-block {
+    @include sizeCurve(margin-bottom, medium);
+  }
+
+  &__result--hidden {
+    display: none;
+  }
+
+  .mdl-stepper {
+    padding-bottom: 0;
+    padding-top: pxToRem($sizeBig);
+    transition: height 0.5s ease;
+
+    &__step {
+      background-color: $colorBg;
+
+      &-page {
+        background-color: transparent;
+
+        .mdl-service_list {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .form {
+      transition: opacity 0.2s ease;
+
+      &__fieldset-list {
+        &--horizontal {
+          .atm-radiobutton {
+            display: block;
+            padding-right: 0;
+            margin-bottom: 0.5rem;
+          }
+        }
+
+        .atm-radiobutton {
+          display: flex;
+        }
+      }
+
+      .mdl-accordion {
+        @include sizeCurve(margin-top, small);
+
+        padding-bottom: 0;
+
+        .mdl-richtext {
+          @include sizeCurve(margin-bottom, regular);
+        }
+      }
+
+      &__group {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      &__row {
+        @include sizeCurve(padding-right, tiny);
+        @include sizeCurve(padding-left, tiny);
+        @include sizeCurve(padding-top, atomic);
+
+        padding-top: pxToRem($sizeTiny);
+        padding-bottom: pxToRem($sizeSmallLarge);
+        background-color: $colorWhite;
+        margin-bottom: pxToRem($sizeMini);
+        flex-wrap: wrap;
+        row-gap: pxToRem($sizeRegular);
+
+        h3.atm-heading {
+          margin-bottom: pxToRem($sizeSmallRegular);
+        }
+
+        h4.atm-heading {
+          margin-bottom: pxToRem($sizeMini);
+        }
+
+        .mdl-image-figure {
+          margin-bottom: 0;
+        }
+
+        .mdl-richtext {
+          .atm-heading {
+            padding-top: 0;
+            margin-top: pxToRem($sizeSmallBig);
+          }
+
+          *:last-child {
+            margin-bottom: pxToRem($sizeSmallRegular);
+          }
+        }
+      }
+
+      &__cell {
+        flex: 0 0 50%;
+        margin-bottom: 0;
+
+        /* CZHDEV-3315 hide subheadings of form section in decision tree */
+        > h4.atm-heading:first-child {
+          display: none;
+        }
+      }
+    }
+  }
+
+  strong {
+    font-family: $fontFamilyBlack;
+  }
+}

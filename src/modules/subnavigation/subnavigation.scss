@@ -1,0 +1,29 @@
+$subnavigationCurves: (
+  textLinkMarginLeft: (
+    tiny: 0,
+    medium: $sizeRegular,
+    xlarge: $sizeLarge,
+  ),
+  headerPaddingTop: (
+    tiny: $sizeSmallLarge,
+    xlarge: $sizeSmallBig,
+  ),
+  headerMarginButtom: (
+    tiny: $sizeLarge,
+    xsmall: $sizeSmallBig,
+    medium: $sizeBig,
+    large: $sizeBiggerBig,
+  ),
+);
+
+.mdl-subnavigation {
+  .atm-heading {
+    @include sizeCurve(padding-top, headerPaddingTop, $subnavigationCurves);
+    @include sizeCurve(margin-bottom, headerMarginButtom, $subnavigationCurves);
+    @include polyFluidSizing(font-size, map-get($fontSizeCurves, big));
+  }
+
+  &__title {
+    color: var(--color-accent);
+  }
+}

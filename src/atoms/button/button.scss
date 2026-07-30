@@ -1,0 +1,319 @@
+$normalButtonSize: $sizeBiggerBig + $sizeTiny;
+
+.atm-button {
+  position: relative;
+  background: $colorBlack;
+  border: none;
+
+  border-radius: 1px;
+  height: pxToRem($normalButtonSize);
+  font-size: 1rem;
+  color: $colorWhite;
+  font-family: $fontFamilyBlack;
+  min-width: pxToRem($normalButtonSize);
+  padding: 1px $sizeLarge 0;
+
+  display: flex;
+  align-items: center;
+  line-height: 1.4;
+
+  max-width: 100%;
+
+  transition: background $transitionTimeSimple $transitionEasingDefault;
+  cursor: pointer;
+
+  &:not(button) {
+    display: inline-flex;
+    text-decoration: none;
+  }
+
+  &__text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  use {
+    fill: $colorWhite;
+  }
+
+  &__text:not(.visuallyhidden) + .atm-button__icon {
+    margin-left: pxToRem(12px);
+  }
+
+  &:hover {
+    background: $colorBlack80;
+  }
+
+  &--icon-only {
+    padding: 0;
+    justify-content: center;
+  }
+
+  /**
+   * Size variations
+   */
+  &--small {
+    height: pxToRem($sizeBig);
+    min-width: pxToRem($sizeBig);
+
+    font-size: pxToRem($sizeFontSmall);
+
+    .atm-button__icon {
+      transform: scale(0.667);
+    }
+  }
+
+  &--big {
+    height: pxToRem($sizeHuge);
+
+    .atm-button__icon {
+      order: 1;
+      margin-right: pxToRem(12px);
+      // Important necessary to override that the margin left is only aplied when text is not visuallyhidden
+      margin-left: 0 !important; //stylelint-disable-line
+    }
+
+    .atm-button__text {
+      order: 2;
+    }
+  }
+
+  /**
+   * Type variations
+   */
+  &--secondary {
+    @include textButton;
+
+    background: rgba($colorBlack, 0.1);
+
+    &:hover {
+      background: rgba($colorBlack, 0.2);
+    }
+
+    &:active {
+      background: $colorBlack;
+      color: $colorWhite;
+
+      use {
+        fill: $colorWhite;
+      }
+    }
+  }
+
+  &--disabled {
+    background-color: $colorBlack15;
+    cursor: not-allowed;
+
+    use {
+      fill: $colorWhite;
+    }
+
+    &:hover {
+      background-color: $colorBlack15;
+
+      use {
+        fill: $colorWhite;
+      }
+    }
+  }
+
+  /**
+   * Inverted
+   */
+  .cv-inverted,
+  &--cv-inverted,
+  [class*='--cv-inverted'] & {
+    background: rgba($colorWhite, 1);
+    color: $colorBlack;
+
+    use {
+      fill: $colorBlack;
+    }
+
+    &:hover {
+      background: rgba($colorWhite, 0.7);
+    }
+
+    //Secondary Button Inverted styles
+    &.atm-button--secondary {
+      background: rgba($colorBlack, 0.2);
+      color: $colorWhite;
+
+      use {
+        fill: $colorWhite;
+      }
+
+      &:hover {
+        background: rgba($colorBlack, 0.4);
+      }
+
+      &:active {
+        background: rgba($colorWhite, 1);
+        color: $colorBlack;
+
+        use {
+          fill: $colorBlack;
+        }
+      }
+    }
+  }
+
+  /**
+  * Tag-Buttons
+  */
+  &--tag {
+    display: inline-flex;
+    border-radius: 75.5px;
+    padding: 0 $sizeRegular;
+    min-width: auto;
+
+    &:hover:not(.atm-button--cv-inverted) {
+      &:not(.atm-button--secondary) {
+        background: rgba($colorBlack, 0.8);
+      }
+      background: rgba($colorBlack, 0.15);
+    }
+
+    &:not(.atm-button--tag-top) {
+      font-family: $fontFamilyBase;
+    }
+
+    &-filter {
+      box-sizing: border-box;
+      transition: border-color $transitionTimeDefault $transitionEasingDefault;
+      padding: 0 $sizeBig 0 $sizeRegular;
+
+      &:not(.atm-button--cv-inverted) {
+        border: 1px solid transparent;
+
+        &:hover {
+          border: 1px solid rgba(0, 0, 0, 0.42);
+        }
+      }
+
+      .atm-button__icon {
+        position: absolute;
+        right: 11.25px;
+        margin-left: 0;
+        top: 2px;
+        transform: scale(0.3958) translateX(50%);
+      }
+    }
+
+    &-topic {
+      padding: 0 calc(#{$sizeRegular} / 2);
+      height: pxToRem($sizeLarge);
+      border-radius: $sizeSmallRegular;
+      background: $colorBlack;
+      color: $colorWhite;
+      font-size: $sizeFontTiny;
+
+      &:hover {
+        background: rgba($colorBlack, 0.8);
+      }
+    }
+
+    &-top {
+      height: $sizeBiggerBig;
+      padding: 0 $sizeSmallRegular;
+      font-size: pxToRem($sizeFontBiggerRegular);
+
+      &:not(.atm-button--small) {
+        height: pxToRem(48px);
+        font-size: pxToRem($sizeFontBig);
+        padding: 0 $sizeLarge;
+      }
+    }
+
+    &-edit {
+      display: inline-flex;
+      flex-direction: row-reverse;
+
+      .icon.atm-button__icon {
+        margin-left: 0;
+        margin-right: 9px;
+        transform: scale(0.625);
+      }
+    }
+  }
+
+  /** SPINNER */
+  &__spinner,
+  &__spinner:after {
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  &__spinner {
+    width: $spinnerSize;
+    height: $spinnerSize;
+    display: none;
+    color: $colorWhite;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    &:after {
+      content: '';
+      width: 100%;
+      height: 100%;
+      display: inline-block;
+      border: $spinnerBorderSize solid currentColor;
+      border-bottom-color: transparent;
+      border-radius: 100%;
+      background: transparent;
+
+      animation: ball-clip-rotate 0.75s linear infinite;
+    }
+  }
+
+  &--loading {
+    // THE BUTTON SHOULD NOT BE CLICKABLE WHILE LOADING
+    pointer-events: none;
+
+    .atm-button__spinner {
+      display: block;
+    }
+
+    .atm-button__text,
+    .atm-button__icon {
+      visibility: hidden;
+    }
+  }
+
+  // CR CZHDEV-2980
+  &--plain-text {
+    @include textButton;
+
+    font-family: $fontFamilyBase;
+    background: none;
+    padding: 0;
+
+    .atm-button__icon {
+      margin-left: 0 !important; //stylelint-disable-line
+      order: 1;
+    }
+
+    .atm-button__text {
+      order: 2;
+    }
+
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+@keyframes ball-clip-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

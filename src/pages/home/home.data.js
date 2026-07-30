@@ -1,0 +1,162 @@
+const _ = require('lodash');
+const defaultData = require('../../data/default.data.js');
+const dataHelper = require('@unic/estatico-data');
+
+const skiplinksData = require('../../modules/skiplinks/skiplinks.data.js').variants.noToc.props;
+const headerData = require('../../modules/header/header.data').variants.invertedWithUserLoggedOut
+  .props;
+
+const defPageHeaderData = require('../../modules/page_header/page_header.data.js').variants.home
+  .props;
+const defTopiclistData = require('../../modules/topiclist/topiclist.data').variants.home.props;
+const defNewsTeaserData = require('../../modules/news_teaser/news_teaser.data').variants
+  .withProminentTeaser.props;
+const defFooterData = require('../../modules/footer/footer.data').variants.default.props;
+const backToData = require('../../modules/back_to/back_to.data').variants.default.props;
+const defImageGallery = require('../../modules/image_gallery/image_gallery.data').variants.default
+  .props;
+const defContactData = require('../../modules/contact/contact.data.js').variants.fullWidthLessData
+  .props;
+const locationsData = require('../../modules/locations/locations.data').variants.default.props;
+
+const defPageHeaderCustomData = {
+  pageTitle: 'Kanton Zürich',
+};
+
+const contentTeaserDefaultData = require('../../atoms/content_teaser/content_teaser.data').variants
+  .default.props;
+
+const defContentNavCustomData = {
+  items: [
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Gesundheit',
+      buzzwords: 'Krankenversicherung, Prämienverbilligung, Kliniken',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Familie',
+      buzzwords:
+        'Partnerschaft, Eltern & Kinder, Untersützung für Kinder & Jugendliche, Alter, Tod, Vormunds Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Soziales',
+      buzzwords:
+        'Arbeitslosigkeit, Finanzielle Hilfen, Sozialversicherungen, Beratungsangebote, Soziale Einricht Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Bildung',
+      buzzwords:
+        'Bildungssystem, Schulen, Unterrichten, Schwierigkeiten in der Schule, Weiterbildung, Forschung, Bil Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Sport & Kultur',
+      buzzwords:
+        'Jugendsport, Sportförderung, Kulturpolitik, Kulturförderung, Kulturpreise, Archä Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Wirtschaft & Arbeit',
+      buzzwords:
+        'Arbeitsmarkt, Arbeitnehmer- & Arbeitgeberverhältnis, Schwarzarbeit, Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge(
+      {},
+      {
+        shortTitle: 'Steuern',
+        buzzwords: 'Steuererklärung, Steuern bezahlen, Grundlagen',
+      }
+    ),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Mobilität',
+      buzzwords:
+        'Reisen: Pass & ID, Fahren lernen, Führerausweis, Fahrzeuge, Autonummern, Gesamtverkehr, Öffentliches, Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Bauen & Planen',
+      buzzwords:
+        'Karten, Bauprojekte (Hochbau), Baubewilligung, Wohnbauförderung, Energie, Lärm, Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Umwelt & Tier',
+      buzzwords: 'Tier, Umweltschutz, Boden, Wald & Pflanzen, Wasser, Luft, Politik & Staat',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Wahlen & Abstimmungen',
+      buzzwords:
+        'Bezirke, Gemeinden, Daten & Statistik, Recht & Gesetze, Beschlüsse, Vernehmlassungen, Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Migration & Integration',
+      buzzwords:
+        'Willkommen im Kanton Zürich, Einreise, Aufenthalt, Wegweisung, Asyl, Integration, Einbürgerung, Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Sicherheit & Justiz',
+      buzzwords:
+        'Polizeimeldungen, Bussen, ePolice, Strafanzeige, Prävention, Kriminalität, Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+    _.merge({}, contentTeaserDefaultData, {
+      shortTitle: 'Über den Kanton',
+      buzzwords:
+        'Zahlen & Fakten, So funktioniert der Kanton, Grossprojekte, Ausgewählte Publikation, Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua',
+    }),
+  ],
+};
+
+/* const defContactCustomData = {
+  fullWidth: true,
+  contactTitle: 'Kontakt',
+  contactAddress: {
+    street: 'Neumühlequai 10',
+    zip: '8090',
+    city: 'Zürich',
+    routeLinkHref: '#',
+    routeLinkLabel: 'Route anzeigen',
+  },
+  contactPhone: [
+    {
+      anchorLabel: '043 259 11 11',
+      phoneNumer: '+41432591111',
+      additionalInfo: 'Telefon',
+      openingTimes: [{
+        timeTitle: 'Bürozeiten',
+        times: [
+          { text: 'Mo-Fr: 8.00 - 11:30 &' },
+          { text: '13:30 - 17:00' },
+        ],
+      }],
+    },
+  ],
+  contactMail: {
+    address: 'info@sk.zh.ch',
+  },
+}; */
+
+const data = _.merge({}, defaultData, {
+  meta: {
+    title: 'Home',
+    jira: 'CZHDEV-334',
+    content: dataHelper.getFileContent('home.hbs'),
+    documentation: dataHelper.getDocumentation('README.md'),
+  },
+  props: {
+    skiplinks: skiplinksData,
+    header: headerData,
+    title: 'Title',
+    text:
+      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et ' +
+      'dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita ' +
+      'kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur.',
+    modules: {
+      pageHeaderData: _.merge({}, defPageHeaderData, defPageHeaderCustomData),
+      topiclist: defTopiclistData,
+      contentNavData: defContentNavCustomData,
+      newsTeaserData: defNewsTeaserData,
+      imageGallery: defImageGallery,
+      locations: locationsData,
+      footerData: defFooterData,
+      contact: defContactData,
+      backToData,
+    },
+  },
+});
+
+module.exports = data;

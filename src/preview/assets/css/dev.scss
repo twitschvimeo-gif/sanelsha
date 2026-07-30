@@ -1,0 +1,141 @@
+@import '../../../assets/css/globals/variables';
+
+/**
+ * Overlay for inspection of elements (see dev.js)
+ */
+
+.estatico-dev-overlay {
+  $color: rgba(100, 200, 255, 0.4);
+
+  position: relative;
+  box-shadow: inset 0 0 0 4px $color;
+
+  &:after {
+    text-transform: capitalize;
+    z-index: 9999999;
+    position: absolute;
+    top: -15px;
+    left: 0;
+    white-space: nowrap;
+    background: $color;
+    color: #000;
+    font-size: 10px;
+    content: attr(data-estatico-dev);
+  }
+}
+
+.estatico-dev-overlay--variant {
+  $color: rgba(208, 235, 98, 0.4);
+
+  box-shadow: inset 0 0 0 4px $color;
+
+  &:after {
+    background: $color;
+  }
+}
+
+// Fake Grid CSS Rules
+
+.dev-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  pointer-events: none;
+
+  .cell {
+    background: #ec554e;
+    opacity: 0.2;
+
+    box-sizing: border-box;
+    height: 100%;
+  }
+}
+
+/** styleguide module styles */
+
+.sg_demo.cv-inverted {
+  background: var(--color-accent);
+}
+
+/** styleguide atom styles */
+
+.sg_atoms {
+  margin: 0;
+  padding: 0 1rem;
+  list-style-type: none;
+}
+
+.sg_atom {
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 0;
+
+  .sg_h3 {
+    margin-top: 0;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .sg_code {
+    max-width: none;
+    margin: 0;
+    flex-basis: 80%;
+  }
+}
+
+.sg_atom-rendition,
+.sg_atom-html {
+  display: flex;
+  position: relative;
+}
+
+.sg_atom-label,
+.sg_atom-html .sg_h4 {
+  flex-basis: 20%;
+  flex-grow: 0;
+  margin-top: 0;
+}
+
+.sg_atom-label {
+  padding-right: 1rem;
+
+  p {
+    font-size: 14px;
+  }
+}
+
+.sg_atom-demo {
+  flex-basis: 80%;
+  padding-left: 10px;
+  padding-right: 10px;
+  background: #fff;
+
+  &.cv-inverted {
+    background: var(--color-accent);
+  }
+}
+
+.sg_atom-demo,
+.sg_atom-label {
+  padding-top: 10px;
+}
+
+/** Special styles for preview module */
+.sg_module {
+  .sg_demo {
+    padding: 0;
+
+    > .cell > .mdl-context_menu {
+      position: static;
+    }
+  }
+}
+
+.sg_atom--loading {
+  min-height: 100px;
+}

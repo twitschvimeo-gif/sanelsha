@@ -1,0 +1,17 @@
+.mdl-filter-pills {
+  display: flex;
+  flex-wrap: wrap;
+
+  .atm-button {
+    margin-bottom: pxToRem($sizeMini);
+
+    &--tag-filter,
+    &--tag {
+      margin-right: pxToRem($sizeMini);
+    }
+  }
+
+  &__hidden-control {
+    display: none;
+  }
+}

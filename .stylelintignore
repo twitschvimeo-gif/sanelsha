@@ -1,0 +1,8 @@
+node_modules/
+*.md
+**/*.js
+**/*.jsx
+dist/
+.tmp/
+src/assets/preview
+{{fileName}}.scss

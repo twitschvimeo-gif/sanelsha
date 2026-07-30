@@ -1,0 +1,92 @@
+<header class="mdl-page-header
+  {{#if inverted}}cv-inverted{{/if}}
+  {{#if minimal}}mdl-page-header--minimal{{/if}}
+  {{#if isReport}}mdl-page-header--report{{/if}}
+  {{#if hasImage}}mdl-page-header--mood-image{{/if}}
+  {{#if isEDirectory}}mdl-page-header--e-directory{{/if}}" data-init="pageHeader">
+
+  {{!-- Close Button --}}
+  {{#if hasCloseButton}}
+    <button class="mdl-page-header__close">Schliessen
+      <svg class="icon" focusable="false">
+        <use xlink:href="#exit"></use>
+      </svg>
+    </button>
+  {{/if}}
+  {{!-- Close Button END --}}
+
+  <div class="lyt-wrapper">
+    <div class="grid-x grid-margin-x">
+
+      {{!--  Logo --}}
+      {{#unless minimal}}
+        <div class="cell small-2 mdl-page-header__logo-container">
+          {{> "atoms/logo/logo" logo}}
+        </div>
+      {{/unless}}
+      {{!-- Logo END --}}
+
+      <div class="cell small-10 medium-10">
+        {{!-- Breadcrumbs --}}
+        {{#unless minimal}}
+          <div class="mdl-page-header__breadcrumb">
+            {{#if breadcrumb}}
+              {{> "modules/breadcrumb/breadcrumb" breadcrumb}}
+            {{/if}}
+          </div>
+        {{/unless}}
+        {{!-- Breadcrumbs END --}}
+
+        {{!-- Title  --}}
+        <h1 class="atm-heading mdl-page-header__title {{#if minimal}}h4{{/if}}">{{pageTitle}}</h1>
+        {{!-- Title END --}}
+      </div>
+
+      <div class="cell small-offset-2 medium-offset-2 large-offset-2 xlarge-offset-2 small-10 medium-9 large-8">
+
+        {{#if anchorLinks}}
+          <div class="mdl-tag-group">
+            <h2 class="atm-heading">Meist gesucht</h2>
+            <ul class="mdl-tag-group__tags">
+              {{#each anchorLinks}}
+                <li>
+                  {{> "atoms/anchorlink/anchorlink" this}}
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/if}}
+
+        {{#if contentNav}}
+          {{> "modules/content_nav/content_nav" contentNav}}
+        {{/if}}
+
+        {{#if leadSection}}
+          {{> "modules/lead_section/lead_section" leadSection}}
+        {{/if}}
+
+      </div>
+    </div>
+  </div>
+
+  {{#if headerExpandData}}
+    {{> "modules/header_expand/header_expand" headerExpandData}}
+  {{/if}}
+
+  {{#if isReport}}
+    {{#if hasImage}}
+      <div class="mdl-page-header__report">
+        <div class="mdl-page-header__mood-image">
+          {{> "modules/image_figure/image_figure" imageData}}
+        </div>
+      </div>
+    {{/if}}
+  {{/if}}
+</header>
+
+{{!-- Key Visual has to be placed immediately after .mdl-page-header.cv-inverted
+      otherwise the colored strip below the key visual won't be shown (adjacent selector in CSS)
+--}}
+{{#if keyVisual}}
+  {{> "modules/key_visual/key_visual" }}
+{{/if}}

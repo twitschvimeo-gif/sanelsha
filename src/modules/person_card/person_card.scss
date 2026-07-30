@@ -1,0 +1,116 @@
+.mdl-person_card {
+  $personCardCurves: (
+    headingMarginBottom: (
+      tiny: 0,
+      medium: $sizeMini,
+    ),
+    containerPadding: (
+      tiny: $sizeSmallLarge,
+      medium: $sizeBig,
+      xlarge: $sizeBiggerBig,
+    ),
+    imageContainerWidth: (
+      medium: 176px,
+      large: 236px,
+    ),
+  );
+
+  background-color: $colorBg;
+  display: inline-block;
+  width: 100%;
+
+  @include sizeCurve(margin-bottom, large);
+  @include mq($from: small) {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  @include mq($to: small) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  &__name {
+    margin-top: 0;
+    line-height: $sizeLineHeightMedium;
+    font-family: $fontFamilyBlack;
+    margin-bottom: pxToRem($sizeMini);
+
+    @include polyFluidSizing('font-size', map-get($fontSizeCurves, biggerRegular));
+    @include mq($to: xsmall) {
+      line-height: $sizeLineHeightBase;
+    }
+  }
+
+  &__imagecontainer {
+    @include polyFluidSizing(min-width, map-get($personCardCurves, imageContainerWidth));
+    @include polyFluidSizing(min-height, map-get($personCardCurves, imageContainerWidth));
+
+    overflow: hidden;
+    line-height: 0;
+    padding: $sizeSmallLarge $sizeSmallLarge 0 $sizeSmallLarge;
+
+    img {
+      width: 100%;
+    }
+
+    @include mq($from: small) {
+      position: relative;
+      padding: 0;
+
+      img {
+        width: auto;
+        position: absolute;
+        height: 100%;
+        transform: translateX(-50%);
+        margin-left: 50%;
+      }
+    }
+  }
+
+  &--standalone {
+    @include sizeCurve(margin-top margin-bottom, big);
+  }
+
+  &__container {
+    width: 100%;
+
+    @include sizeCurve(padding, containerPadding, $personCardCurves);
+
+    .atm-paragraph {
+      margin-bottom: $sizeRegular;
+      font-size: $sizeFontRegular;
+      line-height: $sizeLineHeightBase;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+
+    .atm-text_link {
+      hyphens: none;
+      word-break: break-all;
+    }
+
+    .atm-button {
+      margin-top: $sizeRegular;
+      background-color: rgba($colorBlack, 0.07);
+    }
+
+    .atm-heading {
+      padding-top: 0;
+
+      @include polyFluidSizing('font-size', map-get($fontSizeCurves, biggerRegular));
+      @include sizeCurve(margin-bottom, headingMarginBottom, $personCardCurves);
+    }
+  }
+}
+
+/*
+  CZHDEV-4686
+  Set background-color of person_card to white when used in decision_tree.
+*/
+.mdl-decision_tree {
+  .mdl-person_card {
+    background-color: $colorWhite;
+  }
+}

@@ -1,0 +1,12 @@
+{{#extend "layouts/barebone"}}
+  {{#content "header"}}
+    {{> "modules/page_header/page_header" props.modules.pageHeader.variants.newsDetail.props}}
+    {{> "modules/page_header/page_header" props.modules.pageHeader.variants.topicsImage.props}}
+    {{> "modules/page_header/page_header" props.modules.pageHeader.variants.topicsVideo.props}}
+  {{/content}}
+
+  {{#content "content"}}
+    {{> "modules/richtext/richtext" props.modules.richtext.variants.blue.props}}
+    {{> "modules/linklist/linklist" props.modules.linklistData.props}}
+  {{/content}}
+{{/extend}}

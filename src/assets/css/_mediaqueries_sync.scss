@@ -1,0 +1,6 @@
+:root {
+  @each $name in map-keys($mqBreakpoints) {
+    $value: map-get($mqBreakpoints, $name);
+    --breakpoint-#{$name}: #{$value};
+  }
+}

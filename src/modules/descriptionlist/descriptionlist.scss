@@ -1,0 +1,70 @@
+.mdl-descriptionlist {
+  $customSizing: (
+    termFontSize: (
+      tiny: $sizeFontTiny,
+      xsmall: $sizeFontTiny,
+      small: $sizeFontSmall,
+    ),
+    definitonFontSize: (
+      tiny: $sizeFontRegular,
+      xsmall: $sizeFontBiggerRegular,
+      large: $sizeFontBiggerRegular,
+      xlarge: $sizeFontMedium,
+    ),
+  );
+  text-decoration: none;
+  color: $colorText;
+  position: relative;
+  margin: 0;
+
+  dt {
+    font-family: $fontFamilyBlack;
+    padding-top: $sizeSmallRegular;
+
+    @include polyFluidSizing('font-size', map-get($customSizing, termFontSize));
+  }
+
+  dd {
+    margin-left: 0;
+    font-family: $fontFamilyBase;
+    color: rgba($colorBlack, 0.6);
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba($colorBlack, 0.2);
+
+    @include polyFluidSizing('font-size', map-get($customSizing, definitonFontSize));
+
+    .atm-paragraph:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  dt,
+  dd {
+    line-height: $sizeLineHeightBase;
+    hyphens: auto;
+  }
+
+  @include mq($from: xsmall) {
+    dt {
+      padding-top: 14px;
+    }
+
+    dd {
+      padding-bottom: $sizeTiny;
+    }
+  }
+  @include mq($from: small) {
+    dt {
+      line-height: $sizeLineHeightBigger;
+    }
+  }
+  @include mq($from: xlarge) {
+    dt {
+      padding-top: $sizeRegular;
+    }
+
+    dd {
+      padding-bottom: 14px;
+    }
+  }
+}

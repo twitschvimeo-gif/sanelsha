@@ -1,0 +1,284 @@
+@use 'sass:math';
+
+$gapSize: pxToRem($sizeRegular);
+
+.form {
+  &__section {
+    border: 0;
+    margin: 0;
+    padding: 0;
+
+    min-width: 0;
+  }
+
+  &__section--two-columns {
+    column-count: 1;
+
+    @include mq($from: medium) {
+      column-count: 2;
+
+      &:has(> :nth-child(2):last-child) {
+        display: flex;
+        align-items: flex-start;
+      }
+    }
+    column-gap: 1em;
+
+    .form__group {
+      margin: 0 0 1em;
+      break-inside: avoid;
+    }
+
+    .form__group + .form__group {
+      margin-top: inherit;
+    }
+
+    .form__row {
+      display: grid;
+    }
+
+    .form__cell:first-child {
+      font-family: $fontFamilyBlack;
+    }
+
+    .form__group .form__cell:nth-child(2) {
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__section-title {
+    margin-bottom: pxToRem($sizeSmallRegular);
+
+    &:focus {
+      outline: none;
+    }
+
+    &.atm-heading {
+      padding-top: 0;
+    }
+  }
+
+  &__group {
+    margin-left: -1 * math.div($gapSize, 2);
+    margin-right: -1 * math.div($gapSize, 2);
+
+    .form__group--duplicatable {
+      margin: 0;
+
+      .form__duplicator {
+        margin-bottom: $gapSize;
+      }
+    }
+  }
+
+  &__group + &__group {
+    margin-top: $gapSize;
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-start;
+    padding-bottom: $gapSize;
+
+    &.form__row--narrow {
+      padding-bottom: 0;
+    }
+
+    &:not(:last-of-type) {
+      .form__duplicator {
+        display: none;
+      }
+    }
+
+    @include mq($to: small) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &--duplicatable {
+      .form__cell {
+        flex-grow: 1;
+      }
+    }
+  }
+
+  &__duplicated {
+    position: relative;
+
+    @include mq($to: small) {
+      margin-right: 45px;
+    }
+
+    .form__row:last-of-type {
+      padding-bottom: $gapSize;
+    }
+
+    .form__remover {
+      padding: 0 math.div($gapSize, 2);
+      position: absolute;
+      right: 0;
+      transform: translateX(100%);
+      bottom: pxToRem($sizeBig + $sizeMini);
+
+      use {
+        fill: $colorBlack60;
+      }
+
+      &:hover {
+        use {
+          fill: $colorBlack;
+        }
+      }
+    }
+
+    &:last-of-type {
+      .form__remover {
+        bottom: pxToRem($sizeBig + $sizeSmallBig);
+      }
+    }
+  }
+
+  &__cell {
+    padding: 0 math.div($gapSize, 2);
+    flex: 1 1 0; //stylelint-disable-line
+
+    &:first-child:last-child {
+      flex-basis: 100%;
+      min-width: 100%;
+    }
+
+    &--small {
+      flex-basis: 25%;
+      max-width: 25%;
+      flex-grow: 0;
+    }
+
+    &-attachment {
+      margin-top: pxToRem($sizeRegular);
+    }
+
+    @include mq($to: small) {
+      flex-basis: 100%;
+      max-width: 100%;
+      margin-bottom: $gapSize;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__fieldset {
+    padding: 0;
+    border: none;
+  }
+
+  &__fieldset-error-message {
+    display: block;
+    width: 100%;
+    font-size: pxToRem($sizeFontTiny);
+    line-height: $sizeLineHeightBase;
+    margin: 0;
+    padding-left: pxToRem($sizeRegular + 2px);
+    color: $colorWhite;
+    background-color: $colorRed;
+    transform: translateY(-50%) scaleY(0);
+    transition: transform 400ms, opacity 400ms, height 400ms ease-in-out;
+    height: 0;
+    opacity: 0;
+
+    margin-top: $sizeTiny;
+
+    .invalid & {
+      padding-top: pxToRem(7px);
+      padding-bottom: pxToRem(5px);
+      height: auto;
+      opacity: 1;
+      transform: translateY(0) scaleY(1);
+    }
+  }
+
+  &__legend {
+    font-size: pxToRem($sizeFontTiny);
+    line-height: $sizeLineHeightBase;
+
+    font-family: $fontFamilyBlack;
+    margin-bottom: pxToRem($sizeTiny);
+  }
+
+  &__fieldset-list {
+    .atm-radiobutton {
+      opacity: 0;
+      height: 0;
+      display: block;
+      padding-right: 0;
+      margin-bottom: 0.5rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &--horizontal {
+      .atm-radiobutton {
+        margin-bottom: 0;
+        display: inline-flex;
+        padding-right: 1rem;
+      }
+    }
+
+    &--visible,
+    &--horizontal,
+    &--vertical {
+      .atm-radiobutton {
+        opacity: 1;
+        height: auto;
+      }
+    }
+  }
+
+  &__duplicator {
+    margin-left: math.div($gapSize, 2);
+    display: flex;
+
+    .icon {
+      transform: translateY(-1px);
+    }
+
+    .form__group--has-duplicated & {
+      display: none;
+    }
+  }
+
+  &__group--duplicatable:not(.form__group--limited) {
+    .form__duplicated:last-of-type {
+      .form__duplicator {
+        display: flex;
+      }
+    }
+  }
+
+  &__group--duplicatable.form__group--limited {
+    .form__duplicator {
+      display: none;
+    }
+
+    .form__duplicated:last-of-type {
+      .form__remover {
+        bottom: pxToRem($sizeBig + $sizeMini);
+      }
+    }
+  }
+
+  &__element {
+    &--hidden-by-rule {
+      display: none;
+    }
+  }
+}
+
+/** ADJUSTMENTS FOR AEM INTEGRATION */
+
+.form__row > div:not(.form__cell) {
+  width: 100%;
+}

@@ -1,0 +1,399 @@
+$borderHeightSmall: 2px;
+$borderHeightNormal: 5px;
+$burgerSubNavHeight: pxToRem(72px);
+
+$headerCurves: (
+  height: (
+    tiny: 48px,
+    xsmall: 56px,
+    medium: 72px,
+  ),
+  borderHeight: (
+    tiny: $borderHeightSmall,
+    medium: $borderHeightNormal,
+  ),
+  burgerHeight: (
+    tiny: $sizeSmallHuge,
+    xsmall: $sizeHuge,
+  ),
+  burgerHeightPlusOne: (
+    tiny: calc($sizeSmallHuge + 1px),
+    xsmall: calc($sizeHuge + 1px),
+  ),
+  burgerHeightPlusTwo: (
+    tiny: calc($sizeSmallHuge + 2px),
+    xsmall: calc($sizeHuge + 2px),
+  ),
+  searchPadding: (
+    tiny: $sizeSmallRegular,
+    xsmall: $sizeRegular,
+  ),
+  ktzhTextTop: (
+    tiny: 0,
+    xsmall: 1px,
+  ),
+  ktzhLogoWidth: (
+    tiny: 32px,
+    xsmall: 38px,
+  ),
+);
+
+.mdl-header {
+  @include gridBleed($fullwidth: true);
+  @include sizeCurve(padding-bottom, borderHeight, $headerCurves);
+
+  position: relative;
+  z-index: $zIndexFlyouts;
+
+  background: $colorWhite;
+
+  @include mq($to: small) {
+    padding-bottom: 0;
+
+    @include sizeCurve(border-bottom-width, borderHeight, $headerCurves);
+    border-bottom-style: solid;
+    border-bottom-color: $colorBlack;
+  }
+
+  &__logo {
+    @include polyFluidSizing('width', map-get($headerCurves, ktzhLogoWidth));
+    @include polyFluidSizing('height', map-get($headerCurves, ktzhLogoWidth));
+
+    margin-right: $sizeMini;
+
+    @include mq($from: small) {
+      display: none;
+    }
+  }
+
+  &__logo-text {
+    font-family: $fontFamilyBlack;
+    display: inline-block;
+    position: relative;
+
+    @include polyFluidSizing('top', map-get($headerCurves, ktzhTextTop));
+    @include polyFluidSizing('font-size', map-get($fontSizeCurves, small));
+    @include mq($from: small) {
+      display: none;
+    }
+  }
+
+  &__spacer {
+    margin: auto;
+  }
+
+  &--fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: none;
+    transform: translateX(0);
+    margin-left: 0;
+    z-index: $zIndexFlyouts;
+  }
+
+  &--open {
+    position: fixed;
+    top: 0;
+
+    margin-left: 0;
+    transform: none;
+    left: 0;
+
+    z-index: $zIndexFlyouts + 1;
+
+    .mdl-header__logo {
+      display: none;
+    }
+
+    .mdl-header__logo-text {
+      display: none;
+    }
+
+    .mdl-header__navigation {
+      @include mq($to: small) {
+        display: flex;
+        padding-top: pxToRem($sizeRegular);
+      }
+    }
+
+    .mdl-header__nav-burger {
+      svg {
+        &.close {
+          display: flex;
+        }
+
+        &.burger {
+          display: none;
+        }
+      }
+
+      &:after {
+        @include sizeCurve(top, burgerHeightPlusTwo, $headerCurves);
+
+        content: ' ';
+        background-color: $colorWhite;
+        width: 100%;
+        height: pxToRem($burgerSubNavHeight);
+        position: fixed;
+        left: 0;
+        border-bottom: 1px solid $colorBlack20;
+      }
+    }
+  }
+
+  &--open.mdl-header--nav-level-one {
+    .mdl-header__navigation {
+      @include mq($to: small) {
+        display: none;
+      }
+    }
+
+    .mdl-header__nav-burger {
+      &:after {
+        content: none;
+      }
+    }
+  }
+
+  &__placeholder {
+    width: 200vw;
+    margin-left: -100vw;
+    background-color: var(--color-bg);
+  }
+
+  &__placeholder.cv-inverted {
+    background-color: var(--color-accent);
+  }
+
+  &__wrapper {
+    @include mq($to: small) {
+      display: flex;
+      align-items: center;
+    }
+
+    &:after {
+      @include sizeCurve(height, borderHeight, $headerCurves);
+      background: $colorBlack;
+
+      width: 100vw;
+      position: absolute;
+      display: block;
+      content: ' ';
+
+      @include transition(background);
+      @include mq($to: small) {
+        content: none;
+      }
+    }
+  }
+
+  &__nav-burger {
+    @include blankButton;
+    @include sizeCurve(height, burgerHeight, $headerCurves);
+
+    display: inline-flex;
+    padding: 0 pxToRem($sizeSmallRegular);
+    align-items: center;
+
+    &-text {
+      font-size: pxToRem(16px);
+      color: $colorBlack;
+    }
+
+    &-text--with-user {
+      @include mq($to: xsmall) {
+        display: none;
+      }
+    }
+
+    .icon {
+      padding: pxToRem(4px);
+    }
+
+    svg {
+      fill: $colorBlack;
+      height: pxToRem(24px);
+      width: pxToRem(24px);
+    }
+
+    svg.close {
+      display: none;
+    }
+
+    @include mq($from: small) {
+      display: none;
+    }
+    @include mq($to: small) {
+      position: relative;
+    }
+    @include mq(tiny) {
+      right: pxToRem(34px);
+    }
+    @include mq(xsmall) {
+      right: pxToRem(40px);
+    }
+
+    &.mdl-header__nav-burger-with-user {
+      @include mq(tiny) {
+        right: pxToRem(96px);
+      }
+      @include mq(xsmall) {
+        right: pxToRem(100px);
+      }
+    }
+  }
+
+  &__navigation {
+    display: flex;
+
+    @include resetList;
+
+    li {
+      margin-right: pxToRem($sizeFontLarge);
+    }
+
+    @include mq($to: small) {
+      display: none;
+      position: absolute;
+      left: 0;
+      right: 0;
+    }
+  }
+
+  &__nav-item {
+    @include sizeCurve(line-height, nav, $lineHeightCurves, $pxToRem: false);
+    @include sizeCurve(height, height, $headerCurves);
+    @include polyFluidSizing(font-size, map-get($fontSizeCurves, regular));
+    @include blankButton();
+
+    display: flex;
+    align-items: center;
+
+    color: $colorBlack;
+
+    @include mq($to: small) {
+      height: pxToRem($sizeSmallHuge);
+    }
+    @include transition(color);
+
+    &--active {
+      font-family: $fontFamilyBlack;
+    }
+  }
+
+  &__spacer-line {
+    height: pxToRem(8px);
+    border-left: 1px $colorBlack;
+  }
+
+  &__functions {
+    height: 100%;
+    position: absolute;
+    right: 0;
+
+    @include sizeCurve(bottom, borderHeight, $headerCurves);
+
+    top: 0;
+    display: inline-flex;
+  }
+
+  &__search {
+    color: rgba($colorBlack, 0.6);
+    font-family: $fontFamilyBase;
+
+    @include polyFluidSizing(font-size, map-get($fontSizeCurves, regular));
+
+    height: 100%;
+
+    background: rgba($colorBlack, 0.1);
+
+    svg use {
+      fill: rgba($colorBlack, 0.6);
+    }
+
+    &:hover {
+      background: rgba($colorBlack, 0.3);
+    }
+
+    @include mq($to: small) {
+      padding-bottom: 0;
+    }
+  }
+
+  @include mq($to: medium) {
+    .mdl-header__search {
+      @include sizeCurve(padding-left padding-right, searchPadding, $headerCurves);
+
+      .atm-button__text {
+        display: none;
+      }
+
+      .atm-button__text + .atm-button__icon {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+.cv-inverted:not(.mdl-header--scrolled-past-header) {
+  color: $colorWhite;
+  background-color: var(--color-accent);
+  border-bottom-color: $colorWhite;
+
+  .mdl-header__nav-burger-text {
+    color: $colorWhite;
+  }
+
+  .mdl-header__nav-burger {
+    svg {
+      fill: $colorWhite;
+    }
+  }
+
+  @include mq($from: small) {
+    .mdl-header__nav-item {
+      color: $colorWhite;
+    }
+  }
+
+  .mdl-header__wrapper:after {
+    background: $colorWhite;
+  }
+
+  .mdl-header__functions {
+    .icon {
+      fill: rgba($colorBlack, 0.8);
+    }
+
+    .mdl-header__search {
+      background-color: rgba($colorWhite, 0.4);
+    }
+  }
+}
+
+//CZHDEV-2671: When Modal opened, reset fixed header zindex
+.open-modal {
+  .mdl-header--fixed {
+    z-index: $zIndexFlyouts;
+  }
+
+  &.open-modal-nav {
+    .mdl-header--fixed {
+      z-index: $zIndexFlyouts + 1;
+    }
+  }
+}
+
+.mdl-header--scrolled-past-header {
+  border-bottom: 1px solid $colorBlack20;
+  padding-bottom: 0;
+
+  .mdl-header__wrapper:after {
+    content: none;
+  }
+
+  .mdl-header__nav-burger:after {
+    @include sizeCurve(top, burgerHeightPlusOne, $headerCurves);
+  }
+}

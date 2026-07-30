@@ -1,0 +1,30 @@
+<div class="mdl-anchornav" id="toc" data-init="anchornav" tabindex="-1">
+  <div class="mdl-anchornav__container">
+    <div class="lyt-wrapper">
+      <div class="grid-x grid-margin-x">
+        <div class="cell
+          tiny-12 xsmall-12 small-10 medium-10 large-2 xlarge-2
+          small-offset-2 medium-offset-2 large-offset-0
+          ">
+          <div class="mdl-anchornav__content">
+            <details open>
+              <summary tabindex="-1">
+                <h{{{anchornavTitle.level}}} class="atm-heading">{{ anchornavTitle.title }}</h{{{anchornavTitle.level}}}>
+              </summary>
+              <ul class="mdl-anchornav__list">
+                {{#each anchornavItems}}
+                  <li class="mdl-anchornav__item">
+                    <a
+                      href="#{{anchorlink.anchorlinkAdress}}"
+                      class="mdl-anchornav__anchorlink"
+                    >{{anchorlink.anchorlinkText}}</a>
+                  </li>
+                {{/each}}
+              </ul>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

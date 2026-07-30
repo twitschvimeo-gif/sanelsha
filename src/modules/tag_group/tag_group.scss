@@ -1,0 +1,96 @@
+.mdl-tag-group {
+  $tagGroupSizeMaps: (
+    containerTopPadding: (
+      tiny: $sizeBiggerBig,
+      medium: $sizeBiggerBig,
+      large: $sizeHuge,
+    ),
+    containerBottomPadding: (
+      tiny: $sizeLarge,
+      medium: $sizeLarge,
+      large: $sizeBig,
+      xlarge: $sizeBiggerBig,
+    ),
+    headingBottomMargin: (
+      tiny: $sizeTiny,
+      medium: $sizeTiny,
+      large: $sizeSmallRegular,
+    ),
+    tagsBottomMargin: (
+      tiny: $sizeSmallRegular,
+      large: $sizeRegular,
+      xlarge: $sizeSmallLarge,
+    ),
+  );
+
+  &--wrapped {
+    background-color: var(--color-accent);
+
+    @include gridBleed($fullwidth: true, $trailingGutters: true);
+    @include sizeCurve('padding-top', containerTopPadding, $tagGroupSizeMaps);
+    @include sizeCurve('padding-bottom', containerBottomPadding, $tagGroupSizeMaps);
+
+    .cv-monochrome & {
+      background-color: $colorWhite;
+    }
+
+    .lyt-wrapper {
+      margin: 0;
+      max-width: 100%;
+    }
+
+    @include mq($from: xsmall) {
+      padding-left: pxToRem($sizeRegular);
+      padding-right: pxToRem($sizeRegular);
+    }
+    @include mq($from: small) {
+      padding-left: 0;
+      padding-right: 0;
+
+      .lyt-wrapper {
+        margin: 0 auto;
+        max-width: calc(100% - 4rem);
+      }
+    }
+    @include mq($from: large) {
+      @include gridBleed($fullwidth: true);
+
+      .lyt-wrapper {
+        max-width: calc(100% - 5rem);
+      }
+    }
+  }
+
+  .atm-heading {
+    // should not be affected by .mod-smaller-headings
+    font-size: pxToRem($sizeFontTiny) !important; // stylelint-disable-line
+    padding-top: 0 !important; // stylelint-disable-line
+    line-height: $sizeLineHeightBase !important; // stylelint-disable-line
+    color: $colorWhite;
+
+    @include sizeCurve('margin-bottom', headingBottomMargin, $tagGroupSizeMaps);
+
+    .cv-monochrome & {
+      color: $colorBlack;
+    }
+  }
+
+  &__tags {
+    @include sizeCurve(margin-bottom, tagsBottomMargin, $tagGroupSizeMaps);
+
+    padding: 0;
+    list-style-type: none;
+    font-size: 0;
+    max-width: 100%;
+
+    li {
+      display: inline-block;
+      margin-right: pxToRem($sizeMini);
+      max-width: 100%;
+    }
+  }
+
+  a {
+    margin-bottom: pxToRem($sizeMini);
+  }
+}

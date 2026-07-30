@@ -1,0 +1,211 @@
+@use 'sass:math';
+
+.mdl-video {
+  margin: 0;
+  padding: 0;
+
+  @include sizeCurve(margin-bottom, medium);
+
+  &__frame {
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    &.hidden {
+      display: none;
+    }
+  }
+  /* keep 16:9 Aspect ratio */
+  &__wrapper {
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%; // stylelint-disable-line -- preserve 16:6 aspect ratio
+    margin-bottom: $sizeTiny;
+  }
+
+  &__caption {
+    display: flex;
+    align-items: flex-start;
+
+    .atm-figcaption {
+      flex-grow: 1;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    &--sign-language {
+      display: none;
+    }
+  }
+
+  &__preview,
+  &__cookie-dialog {
+    position: absolute;
+    z-index: $zIndexInner;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+
+    > button {
+      position: absolute;
+    }
+  }
+
+  &__preview {
+    display: flex;
+    cursor: pointer;
+
+    button {
+      bottom: 0;
+      left: 0;
+
+      .atm-button__text {
+        padding-left: pxToRem($sizeTiny);
+      }
+
+      @include mq($from: xlarge) {
+        height: pxToRem($sizeHuge);
+      }
+    }
+
+    &--sign-language {
+      display: none;
+    }
+  }
+
+  &__cookie-dialog {
+    display: none;
+    flex-direction: column;
+    background-color: $colorBg;
+
+    > button {
+      @include blankButton();
+      display: flex;
+      top: pxToRem($sizeTiny);
+      right: pxToRem($sizeTiny);
+
+      .icon {
+        transform: scale(0.3958);
+
+        use {
+          fill: $colorBlack60;
+        }
+      }
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+      margin: auto 0;
+
+      font-size: pxToRem(10px);
+      line-height: $sizeLineHeightBigger;
+      color: $colorBlack60;
+    }
+
+    .atm-button {
+      margin: 0 auto;
+      background-color: $colorWhite;
+      color: $colorBlack;
+
+      .icon {
+        use {
+          fill: $colorRed;
+        }
+      }
+    }
+
+    p {
+      margin: 0;
+    }
+
+    p,
+    strong,
+    a {
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+    }
+
+    strong {
+      display: block;
+    }
+
+    a {
+      position: relative;
+      text-decoration: none;
+      margin: 0 auto pxToRem($sizeRegular) auto;
+      display: flex;
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        height: pxToRem(2px);
+
+        background-color: $colorBlue;
+      }
+    }
+
+    @include mq($from: small) {
+      > button {
+        top: pxToRem($sizeRegular);
+        right: pxToRem($sizeRegular);
+
+        .icon {
+          transform: scale(0.5938);
+        }
+      }
+
+      div {
+        font-size: pxToRem($sizeFontSmall);
+      }
+    }
+    @include mq($from: xlarge) {
+      > button {
+        top: pxToRem($sizeLarge);
+        right: pxToRem($sizeLarge);
+      }
+    }
+  }
+
+  .atm-toggle.atm-toggle--label-left {
+    justify-content: end;
+  }
+
+  &--fullwidth {
+    @include sizeCurve(margin-bottom margin-top, big);
+
+    .mdl-video__wrapper {
+      padding-top: math.div(100vw, 1.777); // stylelint-disable-line -- preserve aspect 16:9 ratio
+
+      @media (min-width: $sizeGlobalMaxWidth) {
+        padding-top: 810px; // stylelint-disable-line -- preserve 16:9 aspect ratio
+      }
+
+      @include gridBleed;
+
+      z-index: 1;
+    }
+
+    .atm-toggle.atm-toggle--label-left {
+      @include gridBleed;
+      padding-right: pxToRem($sizeRegular);
+
+      @media (min-width: $sizeGlobalMaxWidth) {
+        padding-right: 0;
+      }
+    }
+  }
+}

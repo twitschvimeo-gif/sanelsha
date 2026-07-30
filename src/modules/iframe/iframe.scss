@@ -1,0 +1,70 @@
+.mdl-iframe {
+  margin-top: pxToRem($sizeHuge);
+  margin-bottom: pxToRem($sizeHuge);
+
+  @include mq($from: xlarge) {
+    margin-top: pxToRem($sizeGiant);
+    margin-bottom: pxToRem($sizeGiant);
+  }
+
+  &--with-title {
+    margin-top: 0;
+  }
+
+  &__caption {
+    .hidden {
+      display: none;
+    }
+  }
+
+  &:not(.mdl-iframe--small) .mdl-iframe__wrapper {
+    @include gridBleed($fullwidth: true);
+  }
+
+  iframe {
+    color: $colorBlack60;
+    position: relative;
+    width: 1px;
+    min-width: 100%;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
+    margin-bottom: $sizeTiny;
+    border: 2px solid $colorBlack10;
+
+    // Hide scrollbar on wrapper in firefox
+    scrollbar-width: none;
+  }
+
+  &--fullWidth {
+    height: 100%;
+    position: fixed;
+    transform: none;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    left: 0;
+
+    iframe {
+      height: 100%;
+      position: relative;
+      border: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &__figure {
+    margin: 0;
+  }
+
+  &__figure:not(:last-child) {
+    margin-bottom: pxToRem($sizeTiny);
+  }
+
+  &__sub {
+    .atm-text_link {
+      display: flex;
+      border: 0;
+      color: inherit;
+    }
+  }
+}

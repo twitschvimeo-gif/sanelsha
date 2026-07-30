@@ -1,0 +1,19 @@
+<div class="mdl-people_teaser" data-init="peopleTeaser">
+  <h{{headingLevel}} class="atm-heading
+    {{#if_compare visualHeadingLevel "!==" headingLevel}}h{{visualHeadingLevel}}{{/if_compare}}
+    {{#if_compare visualHeadingLevel "===" 2 }}atm-heading--bordered{{/if_compare}}"
+  >{{title}}</h{{headingLevel}}>
+  {{#each teaserBlockList}}
+    <div class="mdl-people_teaser__block">
+      <h{{increment ../headingLevel}} class="atm-heading">{{this.headingText}}</h{{increment ../headingLevel}}>
+      <div class="mdl-people_teaser__cardlist">
+        {{#each teaserCardList}}
+          {{> "modules/person_card/person_card" this}}
+        {{/each}}
+      </div>
+      <p class="atm-paragraph">
+        {{text}}
+      </p>
+    </div>
+  {{/each}}
+</div>

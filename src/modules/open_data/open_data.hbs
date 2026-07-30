@@ -1,0 +1,25 @@
+<div class="mdl-open_data" data-init="openData" data-api-calls="{{stringify api_calls}}">
+  {{#if heading}}
+    <h{{heading.level}} class="atm-heading
+      {{#if_compare heading.visualLevel "!==" heading.level}}h{{heading.visualLevel}}{{/if_compare}}
+      {{#if_compare heading.visualLevel "===" 2 }}atm-heading--bordered{{/if_compare}}"
+    >{{heading.title}}</h{{heading.level}}>
+  {{/if}}
+  {{#ifLengthBetween api_calls 1 1}}
+    <div data-open_data="wrapper"></div>
+  {{else}}
+    <ul data-open_data="wrapper"></ul>
+  {{/ifLengthBetween}}
+
+  <script data-open_data="template" type="text/x-handlebars-template">
+    <% resources.forEach((resource) => { %>
+      <% if (resources.length > 1) { %>
+        <li>
+      <% } %>
+      {{{template}}}
+      <% if (resources.length > 1) { %>
+        </li>
+      <% } %>
+    <% }); %>
+  </script>
+</div>

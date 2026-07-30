@@ -1,0 +1,35 @@
+<div id="contact" class="mdl-contact
+  {{#if fullWidth}}mdl-contact--fullwidth{{/if}}" {{#if fullWidth}}data-anchornav="fullwidth" {{/if}} {{#if
+  withModuleLogic}}data-init="contact" {{/if}} tabindex="-1">
+
+  {{#if fullWidth}}
+    <div class="lyt-wrapper">
+      <div class="grid-x grid-margin-x">
+        <div class="cell small-offset-2 medium-offset-2 large-offset-2 xlarge-offset-2 xsmall-12 small-10">
+          {{> content}}
+        </div>
+      </div>
+    </div>
+  {{else}}
+    {{> content}}
+  {{/if}}
+
+</div>
+
+
+{{!-- handlebars inline-partials for better code readability and formattability --}}
+{{!-- https://handlebarsjs.com/guide/partials.html#inline-partials --}}
+{{#*inline "content"}}
+  {{#if contactTitle}}
+    <h2 {{#if anchorNavReference}} id="{{anchorNavReference}}" data-anchornav="target" {{/if}}
+      class="mdl-contact__title atm-heading atm-heading--bordered">{{contactTitle}}</h2>
+  {{/if}}
+
+  {{#if contactEntry}}
+    {{> "modules/contact_entry/contact_entry" contactEntry }}
+  {{/if}}
+
+  {{#if contactAccordion}}
+    {{> "modules/accordion/accordion" contactAccordion }}
+  {{/if}}
+{{/inline}}

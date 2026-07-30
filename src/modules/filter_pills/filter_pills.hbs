@@ -1,0 +1,26 @@
+{{#if preview}}
+  <button class="atm-button" onclick="document.querySelector('.mdl-filter-pills').dispatchEvent(new CustomEvent('FilterPills.addTag', { detail: { text: 'bla', value: 'blub' }}))">Filter Hinzufügen</button>
+  <br />
+{{/if}}
+<div class="mdl-filter-pills" data-init="filterPills">
+  <script data-template type="text/x-handlebars-template">
+  <span data-pill="<%=value%>" class="atm-button atm-button--small atm-button--tag<% if (typeof(disabled) !== "undefined" && disabled !== true) { %> atm-button--tag-filter<% } %>
+      {{#if secondary}}
+        atm-button--secondary
+      {{/if}}
+    ">
+    <span class="atm-button__text ">
+      <%=text%>
+    </span>
+    <% if (typeof(disabled) !== "undefined" && disabled !== true) { %>
+    <button class="atm-button__icon">
+      <span class="visuallyhidden">Filter <%=text%> entfernen</span>
+      <svg class="icon" focusable="false">
+        <use xlink:href="#exit"></use>
+      </svg>
+    </button>
+    <% } %>
+  </span>
+  </script>
+  {{>"atoms/button/button" buttonData }}
+</div>

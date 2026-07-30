@@ -1,0 +1,31 @@
+<div class="
+  mdl-user-menu
+  {{#if inverted}}mdl-user-menu--inverted{{/if}}"
+  data-init="userMenu"
+  aria-describedby="aria-user-menu"
+>
+  <input type="hidden" data-user-menu="loginStatusEndpoint" value="{{ endpointLoginStatus }}" />
+  
+  <button class="mdl-user-menu__trigger">
+    <span class="mdl-user-menu__user-icon-wrapper">
+      <svg class="icon mdl-user-menu__user-icon" focusable="false">
+        <use xlink:href="#user"></use>
+      </svg>
+    </span>
+    <span class="mdl-user-menu__username" data-user-menu="userNameField"></span>
+    <span class="mdl-user-menu__loginlabel">{{loginLabelText}}</span>
+    <svg class="icon mdl-user-menu__trigger-triangle-icon" focusable="false">
+      <use xlink:href="#angle_drop_down"></use>
+    </svg>
+  </button>
+
+  <div class="mdl-context_menu" id="aria-user-menu">
+    <div>
+      <ul class="mdl-context_menu__list">
+        <li>
+          {{> "atoms/context_menu_item/context_menu_item" logoutItem}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

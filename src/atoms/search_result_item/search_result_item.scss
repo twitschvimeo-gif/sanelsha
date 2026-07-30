@@ -1,0 +1,62 @@
+.atm-search_result_item {
+  @include sizeCurve(padding-top padding-bottom, regular);
+  border-bottom: 1px solid $colorBlack20;
+
+  display: flex;
+  flex-direction: column-reverse;
+
+  &__content {
+    text-decoration: none;
+    display: block;
+
+    h4 {
+      color: $colorBlack;
+      margin-bottom: pxToRem($sizeMini);
+      font-family: $fontFamilyBlack !important; // stylelint-disable declaration-no-important
+    }
+
+    p {
+      color: $colorBlack60;
+      margin: 0;
+
+      @include polyFluidSizing(font-size, map-get($fontSizeCurves, xsmall));
+    }
+
+    .highlight {
+      color: $colorBlack;
+      font-family: $fontFamilyBlack;
+    }
+  }
+
+  &__meta {
+    font-size: pxToRem($sizeFontTiny);
+    color: $colorBlack60;
+  }
+
+  .atm-linklist_item {
+    padding: 0;
+    border: none;
+
+    &:after {
+      display: none;
+    }
+  }
+
+  .atm-linklist_item__text,
+  .atm-heading {
+    color: $colorBlack;
+  }
+
+  .atm-linklist_item__label {
+    color: $colorBlack60;
+  }
+
+  /** SPECIAL STYLES TO SANITIZE FONT SIZE */
+  .mdl-service_list__item-text {
+    @include polyFluidSizing(font-size, map-get($fontSizeCurves, xsmall));
+  }
+
+  .atm-linklist_item--download .atm-linklist_item__label {
+    @include polyFluidSizing(font-size, map-get($fontSizeCurves, supersmall));
+  }
+}

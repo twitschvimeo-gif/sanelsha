@@ -1,0 +1,126 @@
+<fieldset class="form__section">
+  {{#if sectionTitle }}<legend class="atm-heading h{{headingLevel}} form__section-title">{{ sectionTitle }}</legend>{{/if}}
+  {{#each groups}}
+    <div class="form__group {{#if isDuplicatable}}form__group--duplicatable{{/if}}" {{#if isDuplicatable}}data-form="duplicatable"{{/if}} {{#if maxDuplications}}data-max-duplications="{{maxDuplications}}"{{/if}}>
+      {{#each rows}}
+        {{#if isDuplicatable}}
+          <div class="form__group form__group--duplicatable" data-form="duplicatable" {{#if maxDuplications}}data-max-duplications="{{maxDuplications}}"{{/if}}>
+        {{/if}}
+        {{#unless unwrapped}}
+          <div class="form__row">
+          {{#each fields}}
+            <div class="form__cell{{#if isSmall}} form__cell--small{{/if}}">
+              {{#if headingLevel}}
+                <h{{headingLevel}} class="atm-heading
+                  {{#if_compare visualHeadingLevel "!==" headingLevel}}h{{visualHeadingLevel}}{{/if_compare}}
+                  {{#if_compare visualHeadingLevel "===" 2 }}atm-heading--bordered{{/if_compare}}"
+                >{{cellTitle}}</h{{headingLevel}}>
+              {{else}}
+                {{#if cellTitle}}
+                  <h{{../../../headingLevel}} class="atm-heading {{#if_compare ../../../headingLevel "===" 2 }} atm-heading--bordered {{/if_compare}}">
+                    {{cellTitle}}
+                  </h{{../../../headingLevel}}>
+                {{/if}}
+              {{/if}}
+              {{#if tooltipBefore}}
+                {{#if tooltip}}
+                  {{> "modules/tooltip/tooltip" tooltip}}
+                {{/if}}
+              {{/if}}
+              {{{cellContent}}}
+              {{#if cellAttachment}}<div class="form__cell-attachment">{{{cellAttachment}}}</div>{{/if}}
+              {{#unless tooltipBefore}}
+                {{#if tooltip}}
+                  {{> "modules/tooltip/tooltip" tooltip}}
+                {{/if}}
+              {{/unless}}
+            </div>
+          {{/each}}
+        </div>
+        {{/unless}}
+        {{#if unwrapped}}
+          {{#each fields}}
+            {{{cellContent}}}
+            {{#if cellAttachment}}{{{cellAttachment}}}{{/if}}
+          {{/each}}
+        {{/if}}
+        {{#if isDuplicatable}}
+            <button type="button" class="form__duplicator atm-text_link atm-text_link--icon" data-duplicate="duplicator">
+              <svg class="icon icon--iframe-add" focusable="false">
+                <use xlink:href="#add-new"></use>
+              </svg>
+              {{ duplicateLabels.add }}
+            </button>
+            <script type="text/x-handlebars-template">
+              <div class="form__duplicated">
+                <div class="form__row">
+                  {{#each fields}}
+                    <div class="form__cell {{#if isSmall}}form__cell--small{{/if}}">
+                      {{{cellContent}}}
+                      {{#if cellAttachment}}{{{cellAttachment}}}{{/if}}
+                    </div>
+                  {{/each}}
+                </div>
+                <button type="button" class="form__remover" data-duplicate="remover" data-remove-uid="">
+                  <svg class="icon" focusable="false">
+                    <use xlink:href="#delete"></use>
+                  </svg>
+                  <span class="visuallyhidden">{{ duplicateLabels.remove }}</span>
+                </button>
+                <button type="button" class="form__duplicator atm-text_link atm-text_link--icon" data-duplicate="duplicator">
+                  <svg class="icon icon--iframe-add" focusable="false">
+                    <use xlink:href="#add-new"></use>
+                  </svg>
+                  {{ duplicateLabels.add }}
+                </button>
+              </div>
+            </script>
+          </div>
+        {{/if}}
+
+        {{#if ../isDuplicatable}}
+          {{#if @last}}
+            <button type="button" class="form__duplicator atm-text_link atm-text_link--icon" data-duplicate="duplicator">
+              <svg class="icon icon--iframe-add" focusable="false">
+                <use xlink:href="#add-new"></use>
+              </svg>
+              {{ ../duplicateLabels.add }}
+            </button>
+          {{/if}}
+        {{/if}}
+      {{/each}}
+      {{#if isDuplicatable}}
+        <script type="text/x-handlebars-template">
+          <div class="form__duplicated">
+            {{#each rows}}
+              <div class="form__row">
+                {{#each fields}}
+                  <div class="form__cell {{#if isSmall}}form__cell--small{{/if}}">
+                    {{{cellContent}}}
+                    {{#if cellAttachment}}{{{cellAttachment}}}{{/if}}
+                  </div>
+                {{/each}}
+              </div>
+              {{#if ../isDuplicatable}}
+                {{#if @last}}
+                  <button type="button" class="form__remover" data-duplicate="remover" data-remove-uid="">
+                    <svg class="icon" focusable="false">
+                      <use xlink:href="#delete"></use>
+                    </svg>
+                    <span class="visuallyhidden">{{ ../duplicateLabels.remove }}</span>
+                  </button>
+                  <button type="button" class="form__duplicator atm-text_link atm-text_link--icon" data-duplicate="duplicator">
+                    <svg class="icon icon--iframe-add" focusable="false">
+                      <use xlink:href="#add-new"></use>
+                    </svg>
+                    {{ ../duplicateLabels.add }}
+                  </button>
+                {{/if}}
+              {{/if}}
+            {{/each}}
+          </div>
+        </script>
+      {{/if}}
+    </div>
+  {{/each}}
+</fieldset>

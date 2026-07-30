@@ -1,0 +1,9 @@
+node_modules
+dist
+www
+.idea
+.tmp
+.tmp-*
+tmp-*
+frontend-living-styleguide.iml
+**/.DS_Store

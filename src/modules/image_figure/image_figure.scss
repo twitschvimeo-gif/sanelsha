@@ -1,0 +1,136 @@
+@use 'sass:math';
+
+$smallImageWidths: (
+  tiny: (
+    left: 16.67%,
+    right: 16.67%,
+  ),
+  small: (
+    left: 10%,
+    right: 30%,
+  ),
+  medium: (
+    left: 22.222%,
+    right: 22.222%,
+  ),
+  large: (
+    left: 25%,
+    right: 25%,
+  ),
+);
+
+.mdl-image-figure {
+  margin: 0;
+
+  @include sizeCurve(margin-bottom, medium);
+
+  &__img-wrapper {
+    line-height: 0;
+    max-height: 100%;
+    margin-bottom: $sizeTiny;
+
+    @at-root button#{&} {
+      @include blankButton;
+
+      line-height: 0;
+    }
+  }
+
+  &__img {
+    width: 100%;
+  }
+
+  &__meta {
+    display: flex;
+  }
+
+  &__caption {
+    align-items: flex-start;
+
+    @include sizeCurve(margin-bottom, small);
+  }
+
+  &__download {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-left: pxToRem($sizeTiny);
+
+    &:hover .mdl-image-figure__download-icon use {
+      fill: $colorBlack;
+    }
+  }
+
+  &__description {
+    color: $colorBlack60;
+    margin-top: pxToRem($sizeBig);
+    margin-bottom: pxToRem($sizeSmallLarge);
+  }
+
+  &__download-icon {
+    width: 1rem;
+    height: 1rem;
+
+    use {
+      fill: $colorBlack60;
+      transition: fill $transitionTimeSimple $transitionEasingDefault;
+    }
+  }
+
+  /**
+   * Size variations for images
+   */
+  &--imagesmall {
+    @each $bp, $bpWidth in $breakpoints {
+      @include mq($bp) {
+        $paddings: getValueForBreakpoint($smallImageWidths, $bp);
+
+        padding-left: calc(
+          #{map-get($paddings, left)} + #{math.div(
+              getValueForBreakpoint($grid-margin-gutters, $bp),
+              4
+            )}
+        );
+        padding-right: calc(
+          #{map-get($paddings, right)} + #{math.div(
+              getValueForBreakpoint($grid-margin-gutters, $bp),
+              4
+            )}
+        );
+      }
+    }
+  }
+
+  /**
+   * Size variation for fullwidth
+   */
+  &--fullwidth {
+    @include sizeCurve(margin-top, large);
+
+    .mdl-image-figure__img {
+      @include gridBleed($fullwidth: true);
+    }
+  }
+
+  /**
+   * Embedded in gallery
+   */
+  .mdl-image_gallery & {
+    @include sizeCurve(margin-bottom, small);
+
+    .mdl-image-figure__img-wrapper {
+      margin-top: pxToRem($sizeSmallRegular);
+      margin-bottom: pxToRem($sizeTiny);
+    }
+  }
+
+  /**
+   * Embedded in color variation inverted
+   */
+  [class*='--cv-inverted'] &,
+  .cv-inverted &,
+  [class*='--fullscreen'] & {
+    .mdl-image-figure__download use {
+      fill: $colorWhite;
+    }
+  }
+}

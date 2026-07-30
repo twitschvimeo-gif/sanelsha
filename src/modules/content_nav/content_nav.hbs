@@ -1,0 +1,34 @@
+<div class="
+  mdl-content_nav
+  {{#if forceTwoColumns}}
+    {{#ifLengthBetween items 1 1}}mdl-content_nav--single-column
+    {{else}}mdl-content_nav--two-columns
+    {{/ifLengthBetween}}
+  {{else}}
+    {{#ifLengthBetween items 1 1}}mdl-content_nav--single-column{{/ifLengthBetween}}
+    {{#ifLengthBetween items 2 4}}mdl-content_nav--two-columns{{/ifLengthBetween}}
+  {{/if}}
+
+  {{#if additionalClasses}} {{{additionalClasses}}}{{/if}}"
+  {{#if anchorNavReference}} id="{{anchorNavReference}}" data-anchornav="target"{{/if}}
+  data-init="contentNav"
+  aria-live="polite"
+  {{#if selector}}{{{selector}}}{{/if}}
+>
+  <ul class="mdl-content_nav__list">
+    {{#each items}}
+      <li class="mdl-content_nav__item" {{#if additionalAttributes}}{{{additionalAttributes}}}{{/if}}>
+        {{> "atoms/content_teaser/content_teaser" this}}
+      </li>
+    {{/each}}
+    {{#if promotopic}}
+      <li class="mdl-content_nav__item" {{#if additionalAttributes}}{{{additionalAttributes}}}{{/if}}>
+        {{> "atoms/content_teaser/content_teaser" promotopic}}
+      </li>
+    {{/if}}
+  </ul>
+
+  {{#if hasSpinner}}
+    {{> "atoms/loading_circle/loading_circle"}}
+  {{/if}}
+</div>

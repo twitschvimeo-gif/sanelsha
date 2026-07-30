@@ -1,0 +1,31 @@
+.mdl-download_list {
+  &--last {
+    @include sizeCurve(margin-bottom, regular);
+  }
+
+  &__list {
+    @include resetList;
+
+    .atm-linklist_item__label {
+      line-height: $sizeLineHeightBase;
+    }
+  }
+
+  &__item {
+    position: relative;
+  }
+
+  &__title.atm-heading {
+    margin-bottom: pxToRem($sizeTiny);
+
+    @include sizeCurve(margin-top, big);
+  }
+
+  .mdl-context_menu {
+    display: none;
+  }
+
+  &--margin-bottom {
+    @include sizeCurve(margin-bottom, big);
+  }
+}

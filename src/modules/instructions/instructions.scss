@@ -1,0 +1,163 @@
+.mdl-instructions {
+  $customSizing: (
+    itemTop: (
+      tiny: $sizeFontBiggerBig + $sizeFontBiggerRegular,
+      xlarge: $sizeBiggerBig,
+    ),
+    counterFontSize: (
+      tiny: $sizeFontSmallBig,
+      small: $sizeFontBiggerBig,
+      xlarge: $sizeFontGiant,
+    ),
+    counterLineHeight: (
+      tiny: 34px,
+      small: 48px,
+      xlarge: 72px,
+    ),
+    checkerIconSize: (
+      zero: 19.38px,
+      small: 25.83px,
+      xlarge: 38.75px,
+    ),
+    headingPaddingTop: (
+      small: $sizeMini,
+      xlarge: $sizeSmallRegular,
+    ),
+  );
+
+  &__list {
+    position: relative;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    .mdl-instructions__item:before {
+      @include sizeCurve(padding-top, headingPaddingTop, $customSizing);
+
+      right: 100%;
+      position: absolute;
+      padding-right: pxToRem($sizeBig);
+
+      @include mq($to: small) {
+        right: initial;
+      }
+    }
+  }
+
+  ol.mdl-instructions__list {
+    counter-reset: item-counter;
+
+    .mdl-instructions__item {
+      @include sizeCurve('margin-top', itemTop, $customSizing);
+      counter-increment: item-counter;
+
+      &:before {
+        @include polyFluidSizing('font-size', map-get($customSizing, counterFontSize));
+        @include sizeCurve('line-height', counterLineHeight, $customSizing);
+
+        color: var(--color-accent);
+        font-family: $fontFamilyBlack;
+        content: counter(item-counter, decimal-leading-zero);
+
+        @include mq($to: small) {
+          @include sizeCurve('top', counterLineHeight, $customSizing, $isNegative: true);
+        }
+      }
+    }
+  }
+
+  ul.mdl-instructions__list {
+    .mdl-instructions__item {
+      margin-top: pxToRem($sizeBiggerBig);
+
+      @include mq($to: small) {
+        margin-top: pxToRem($sizeLarge);
+
+        .mdl-instructions__item-title {
+          padding-left: 10px;
+          margin-left: 19.38px;
+        }
+      }
+
+      &:before {
+        @include sizeCurve('width' 'height' 'background-size', checkerIconSize, $customSizing);
+
+        content: '';
+        padding-right: pxToRem($sizeBig);
+        background-image: url(svg-checkmark($colorBlack)); // stylelint-disable-line
+        background-position: bottom left;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+
+  &__item {
+    position: relative;
+
+    .atm-heading {
+      padding: 0;
+
+      @include sizeCurve(padding-top, headingPaddingTop, $customSizing);
+    }
+  }
+
+  &__item-content {
+    // Remove from every li content the bottom space except from the last li
+    &:not(:last-of-type) {
+      *:last-of-type {
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  /*
+  *  MODULE OVERWRITES
+  */
+  .mdl-richtext {
+    .atm-heading {
+      margin-left: 0;
+    }
+
+    .mdl-richtext__lead {
+      text-indent: 0;
+    }
+  }
+
+  .mdl-button_group {
+    width: 100%;
+    transform: none;
+    margin: 0;
+    padding-right: 0;
+  }
+
+  .mdl-carousel__control {
+    @include mq($from: large) {
+      justify-content: flex-end;
+
+      .mdl-carousel__indicator {
+        width: 100%;
+        text-align: center;
+      }
+
+      .mdl-button_group {
+        width: auto;
+      }
+    }
+  }
+}
+
+/*
+* COLOR-VARIATIONS
+*/
+@each $key, $val in $tl-color-variations {
+  .#{$key} {
+    ul.mdl-instructions__list .mdl-instructions__item:before {
+      background-image: url(svg-checkmark($val)); // stylelint-disable-line
+    }
+  }
+}

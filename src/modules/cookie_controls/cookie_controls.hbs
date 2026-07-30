@@ -1,0 +1,23 @@
+<div class="mdl-cookie_controls {{#if smallerHeadings}}mod-smaller-headings{{/if}}" data-init="cookieControls" data-expirydays="{{expiryDays}}">
+	<h{{headingLevel}} class="atm-heading mdl-cookie_controls__heading">{{heading}}</h{{headingLevel}}>
+  {{#each items}}
+  <div class="atm-checkbox atm-checkbox--strong">
+    <input type="checkbox" id="{{cookieName}}"
+      {{#if description}}aria-describedby="{{cookieName}}__hint"{{/if}}
+      {{#if defaultValue}}checked{{/if}}
+    />
+    <label for="{{cookieName}}">
+      {{label}}
+      <span>
+			<svg class="icon icon--iframe-arrow" focusable="false">
+				<use xlink:href="#check"></use>
+			</svg>
+		</span>
+      {{#if description}}
+        <p id="{{cookieName}}__hint" class="atm-checkbox__hint">{{description}}</p>
+      {{/if}}
+    </label>
+  </div>
+
+{{/each}}
+</div>

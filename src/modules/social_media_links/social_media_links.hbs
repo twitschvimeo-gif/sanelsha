@@ -1,0 +1,23 @@
+<div class="mdl-social-media-links{{#if contactVariant}} mdl-social-media-links--contact{{/if}}" data-init="socialMediaLinks">
+  {{#if heading}}
+    <h{{heading.level}}
+      {{#if anchorNavReference}}id="{{anchorNavReference}}" data-anchornav="target"{{/if}}
+      class="atm-heading{{#if contactVariant}} visuallyhidden{{/if}}"
+    >
+      {{heading.title}}
+    </h{{heading.level}}>
+  {{/if}}
+
+  <ul>
+    {{#each items}}
+      <li class="mdl-social-media-links__item">
+        <a href="{{this.url}}" class="atm-button atm-button--icon-only atm-button--secondary atm-button--cv-inverted{{#if ../contactVariant}} atm-button--small{{/if}}">
+        <span class="atm-button__text visuallyhidden">
+          {{this.linkText}}
+        </span>
+          <img src="{{this.imgSrc}}" alt="">
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+</div>

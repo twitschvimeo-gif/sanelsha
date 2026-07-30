@@ -1,0 +1,14 @@
+{{#extend "layouts/layout"}}
+  {{#content "pageheader"}}
+    {{> "modules/page_header/page_header" props.modules.pageHeaderData }}
+  {{/content}}
+
+	{{#content "content"}}
+    {{> "modules/toc_list/toc_list" props.modules.tocListData }}
+	{{/content}}
+
+  {{#content "footer"}}
+    {{> "modules/footer/footer" props.modules.footerData }}
+    {{> "modules/back_to/back_to" props.modules.backToData }}
+  {{/content}}
+{{/extend}}

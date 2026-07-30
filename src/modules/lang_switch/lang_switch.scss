@@ -1,0 +1,51 @@
+.mdl-lang-switch {
+  @include gridBleed($fullwidth: true);
+  background: var(--color-accent-soft);
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: pxToRem($sizeRegular);
+
+    @include sizeCurve('padding-block', regular);
+  }
+
+  h2.atm-heading {
+    font-family: $fontFamilyBase;
+
+    @include polyFluidSizing('font-size', map-get($fontSizeCurves, smallModFontSizeH5H6));
+    line-height: $sizeLineHeightBase;
+    margin-bottom: 0;
+    padding-top: 0;
+  }
+
+  .atm-button {
+    height: pxToRem($sizeBig);
+    font-size: pxToRem($sizeFontSmall);
+  }
+
+  .icon {
+    width: pxToRem($sizeRegular);
+    height: pxToRem($sizeRegular);
+    margin-right: pxToRem($sizeTiny);
+  }
+
+  &__list {
+    @include resetList;
+    display: flex;
+    gap: pxToRem($sizeTiny);
+    flex-wrap: wrap;
+  }
+
+  @include mq($from: large) {
+    &__content {
+      flex-direction: row;
+      align-items: baseline;
+    }
+  }
+}
+
+// additional whitespace below on white detail pages
+.mod-smaller-headings .mdl-lang-switch {
+  @include sizeCurve(margin-bottom, big);
+}

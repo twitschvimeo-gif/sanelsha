@@ -1,0 +1,28 @@
+.mdl-accordion {
+  padding-bottom: 1rem;
+
+  &__plus .vertical {
+    transform: rotate(90deg);
+  }
+
+  &__panel {
+    display: block !important; // stylelint-disable-line
+    max-height: initial !important; // stylelint-disable-line
+  }
+
+  &__control {
+    max-height: none;
+    white-space: normal;
+    color: $colorBlack;
+  }
+
+  &__plus use {
+    fill: $colorBlack;
+  }
+
+  &--cv-inverted {
+    transform: none !important; // stylelint-disable-line
+    margin: 0 !important; // stylelint-disable-line
+    padding: 0 !important; // stylelint-disable-line
+  }
+}

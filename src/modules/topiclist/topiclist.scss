@@ -1,0 +1,196 @@
+$leadFontCurve: (
+  tiny: $sizeFontRegular,
+  large: $sizeFontRegular,
+  xlarge: $sizeFontMedium,
+);
+$topiclistSizeCurves: (
+  input: (
+    tiny: $sizeLarge,
+    medium: $sizeBig,
+    large: $sizeBiggerBig,
+  ),
+);
+
+.mdl-topiclist {
+  @include sizeCurve('margin-top', big);
+  @include sizeCurve('margin-bottom', big);
+
+  &--loading {
+    position: relative;
+    min-height: $loadingMinHeight;
+  }
+
+  .mdl-topiclist__autosuggest {
+    display: none;
+
+    &.mdl-content_nav {
+      .mdl-content_nav__item:nth-child(1n + 9) {
+        display: none;
+      }
+
+      .mdl-content_nav__item {
+        border-width: 0;
+      }
+    }
+
+    &--no-result {
+      display: none;
+    }
+  }
+
+  &--expanded {
+    .mdl-topiclist__autosuggest {
+      &.mdl-content_nav {
+        .mdl-content_nav__item:nth-child(1n + 9) {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  &--nav {
+    @include sizeCurve(margin-top, large);
+    @include sizeCurve(margin-bottom, large);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__fullwidth-wrapper {
+    @include gridBleed($fullwidth: true);
+    text-align: center;
+
+    .mdl-topiclist__show-all {
+      display: inline-flex;
+    }
+
+    .mdl-topiclist--filtered & {
+      width: auto;
+      transform: none;
+      margin-left: 0;
+      text-align: left;
+    }
+  }
+
+  &__search {
+    display: flex;
+
+    @include sizeCurve(padding-top padding-bottom, regular);
+    align-items: center;
+
+    text-decoration: none;
+    color: $colorBlack60;
+
+    .icon {
+      margin-right: $sizeTiny;
+      min-width: pxToRem(24);
+      min-height: pxToRem(24);
+
+      use {
+        fill: $colorBlack60;
+      }
+    }
+
+    &:hover {
+      color: $colorBlack;
+
+      .icon use {
+        fill: $colorBlack;
+      }
+    }
+  }
+
+  .mdl-topiclist__show-all {
+    margin: $sizeLarge 0;
+
+    svg {
+      margin-left: $sizeSmallRegular;
+      transform: scale(0.625);
+    }
+  }
+
+  + .atm-heading {
+    padding-top: $sizeSmallRegular;
+    margin-bottom: $sizeLarge;
+  }
+
+  @include mq($from: large) {
+    + .atm-heading {
+      margin-bottom: $sizeBig;
+    }
+  }
+  @include mq($from: xlarge) {
+    + .atm-heading {
+      margin-bottom: $sizeBiggerBig;
+    }
+  }
+
+  .atm-form_input {
+    @include sizeCurve(margin-bottom, input, $topiclistSizeCurves);
+  }
+
+  /**
+   * SPECIAL STYLES FOR TOPICLIST HOME
+  */
+  &--home {
+    .mdl-topiclist__show-all {
+      display: none;
+    }
+  }
+
+  /** SPECIAL STYLES WHEN LIST IS FILTERED */
+  &--filtered {
+    .mdl-content_nav:not(.mdl-topiclist__autosuggest) {
+      display: none;
+    }
+
+    .mdl-topiclist__navigation {
+      display: none;
+    }
+
+    .mdl-topiclist__autosuggest {
+      display: inherit;
+
+      &--no-result {
+        display: none;
+      }
+    }
+  }
+
+  /** Default styles for further layers */
+  [data-layer] {
+    display: none;
+
+    &.mdl-topiclist--visible {
+      display: inherit;
+    }
+  }
+
+  &--hidden {
+    display: none;
+  }
+
+  // overwrite contentnav for sectioned topiclist
+  .mdl-content_nav:not(:last-child) {
+    @include sizeCurve(margin-bottom, medium);
+  }
+
+  &__no-results-placeholder {
+    display: none;
+
+    &.visible {
+      display: block;
+
+      .atm-button {
+        display: inline-flex;
+        flex-direction: row-reverse;
+        gap: $sizeTiny;
+
+        svg {
+          margin: 0;
+        }
+      }
+    }
+  }
+}

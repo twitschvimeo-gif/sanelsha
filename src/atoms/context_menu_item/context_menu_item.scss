@@ -1,0 +1,79 @@
+.atm-context_menu_item {
+  min-height: pxToRem($sizeTiny + $sizeBiggerBig);
+
+  display: flex;
+  align-items: center;
+  font-size: pxToRem($sizeFontRegular);
+  color: $colorBlack60;
+
+  padding: 0 $sizeSmallRegular;
+  text-decoration: none;
+
+  width: 100%;
+
+  @include transition(color);
+
+  &:hover:not(:disabled),
+  &:active,
+  &--selected {
+    color: $colorBlack;
+    background: $colorBg;
+
+    .atm-context_menu_item__icon use {
+      fill: $colorBlack;
+    }
+  }
+
+  &:disabled {
+    pointer-events: none;
+  }
+
+  // CZHDEV-559
+  &:focus {
+    outline: none;
+  }
+
+  &:active,
+  &--selected {
+    background: $colorCyan;
+  }
+
+  // Selectable states
+  &--selectable {
+    .atm-context_menu_item__icon:first-child {
+      opacity: 0;
+
+      @include transition(opacity);
+    }
+
+    &.atm-context_menu_item--selected {
+      .atm-context_menu_item__icon:first-child {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__label {
+    flex-grow: 1;
+  }
+
+  &__icon {
+    use {
+      @include transition(fill);
+
+      fill: $colorBlack60;
+    }
+
+    &:last-child {
+      margin-right: pxToRem(5px);
+    }
+
+    &:first-child {
+      margin-right: pxToRem($sizeTiny);
+    }
+  }
+
+  &--hidden {
+    display: none;
+  }
+}

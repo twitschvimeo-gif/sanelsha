@@ -1,0 +1,29 @@
+<fieldset class="form__fieldset" data-input>
+    <div class="form__fieldset-list form__fieldset-list--vertical">
+        <div class="atm-checkbox">
+            <input type="checkbox"
+                   id="checkbox-<%=fieldName%>"
+                   name="<%=fieldName%>" data-validation
+                   value="<%=label%>"
+                   aria-describedby="checkbox-<%=fieldName%>__hint"
+                   <% if (reinvokeTrigger) { %> data-tax_calc-reinvoke="true"<% } %>
+                   <% if (mandatory) { %> required<% } %><% if (value) { %> checked<% } %>>
+            <label for="checkbox-<%=fieldName%>">
+                <%=label%>
+                <span>
+                  <svg class="icon icon--iframe-arrow" focusable="false">
+                    <use xlink:href="#check"></use>
+                  </svg>
+                </span>
+                <% if (hint) { %>
+                  <p id="checkbox-<%=fieldName%>__hint" class="atm-checkbox__hint"><%=hint%></p>
+                <% } %>
+            </label>
+        </div>
+
+    </div>
+
+    <% if (mandatory) { %>
+      <p class="form__fieldset-error-message" data-message="required">{{requiredMessages.boolean}}</p>
+    <% } %>
+</fieldset>

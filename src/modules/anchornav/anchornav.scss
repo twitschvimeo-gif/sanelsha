@@ -1,0 +1,162 @@
+.mdl-anchornav {
+  &__container {
+    @include gridBleed($fullwidth: true);
+    padding-top: pxToRem($sizeRegular);
+    margin-bottom: pxToRem($sizeBiggerBig);
+    background-color: $colorWhite;
+    z-index: $zIndexScaffolds;
+  }
+
+  h2.atm-heading {
+    display: inline;
+    padding-top: 0 !important; // stylelint-disable-line
+    margin-top: 0;
+    margin-bottom: pxToRem($sizeTiny) !important; // stylelint-disable-line
+    font-family: $fontFamilyBlack;
+    color: $colorBlack;
+
+    @include mq($from: tiny) {
+      font-size: pxToRem($sizeFontRegular) !important; // stylelint-disable-line
+      line-height: $sizeLineHeightBase !important; // stylelint-disable-line
+    }
+    @include mq($from: small) {
+      font-size: pxToRem($sizeFontBiggerRegular) !important; // stylelint-disable-line
+      line-height: $sizeLineHeightMedium !important; // stylelint-disable-line
+    }
+    @include mq($from: large) {
+      font-size: pxToRem($sizeFontSmall) !important; // stylelint-disable-line
+      line-height: $sizeLineHeightBigger !important; // stylelint-disable-line
+    }
+  }
+
+  &__anchorlink {
+    display: block;
+    text-decoration: none;
+    font-family: $fontFamilyBase;
+    color: $colorBlack60;
+    font-size: pxToRem($sizeFontRegular);
+    line-height: $sizeLineHeightBase;
+    white-space: initial;
+    overflow: hidden;
+    padding: pxToRem($sizeTiny) 0;
+    padding-left: pxToRem($sizeSmallRegular);
+    border-left: 1px solid $colorBlack20;
+
+    &--active {
+      color: $colorBlack;
+      border-left: 3px solid $colorBlack;
+    }
+  }
+
+  summary {
+    display: flex;
+    gap: pxToRem(4px);
+    list-style: none;
+    cursor: pointer;
+    margin-bottom: pxToRem($sizeSmallRegular);
+    pointer-events: none;
+    user-select: none;
+
+    h2.atm-heading {
+      margin-bottom: 0;
+      user-select: none;
+    }
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  &__list {
+    @include resetList();
+    margin-left: pxToRem($sizeSmallRegular);
+
+    @include mq($from: large) {
+      margin-left: 0;
+    }
+  }
+
+  &__container--sticky {
+    //sticky style up to breakpoint large
+    @include mq($to: large) {
+      position: fixed;
+      left: 0;
+      padding-top: 0;
+      margin-bottom: 0;
+
+      @include sizeCurve(top, height, $headerCurves);
+      transform: translateX(-50%);
+      box-shadow: 0 0 pxToRem(16px) 0 rgba(0, 0, 0, 0.2);
+
+      summary {
+        margin-bottom: 0;
+        padding-left: 0;
+        padding-right: pxToRem($sizeRegular);
+
+        @include sizeCurve(padding-block, regular);
+        pointer-events: initial;
+        user-select: initial;
+
+        &:after {
+          content: '';
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M17 9.5L12 14.5L7 9.5L17 9.5Z' fill='black'/%3E%3C/svg%3E");
+          width: pxToRem(24px);
+          height: pxToRem(24px);
+          background-size: cover;
+        }
+      }
+
+      details[open] summary:after {
+        transform: rotate(180deg);
+      }
+
+      h2.atm-heading {
+        font-family: $fontFamilyBase;
+      }
+
+      .mdl-anchornav__list {
+        padding-bottom: pxToRem($sizeLarge);
+        margin-left: pxToRem($sizeSmallRegular);
+      }
+    }
+  }
+
+  @include mq($from: large) {
+    &__container {
+      transition: opacity $transitionTimeFadeIn;
+      position: absolute;
+      top: 0;
+      padding-top: 0;
+      left: 0;
+      pointer-events: none;
+      background-color: transparent;
+
+      .cell {
+        pointer-events: initial;
+      }
+
+      &--hide {
+        opacity: 0;
+        transition: opacity $transitionTimeFadeOut;
+
+        .cell {
+          pointer-events: none;
+        }
+      }
+    }
+
+    &__anchorlink {
+      font-size: pxToRem($sizeFontTiny);
+    }
+
+    &__container--sticky {
+      //sticky style from breakpoint large
+      position: fixed;
+      top: pxToRem(120px); // equals scroll-margin-top
+    }
+  }
+
+  &__wrapper {
+    position: relative;
+  }
+}

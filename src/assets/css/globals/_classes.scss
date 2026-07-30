@@ -1,0 +1,16 @@
+/**
+ * Generic classes
+ */
+
+.visuallyhidden {
+  @include visuallyhidden;
+}
+
+.clearfix {
+  @include clearfix;
+}
+
+.hidden {
+  /* eslint-disable-next-line */
+  display: none !important; //stylelint-disable-line
+}

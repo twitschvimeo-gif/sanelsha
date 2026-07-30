@@ -1,0 +1,413 @@
+@use 'sass:math';
+
+/**
+ * Layout
+ */
+$sizeGlobalMaxWidth: 1440px;
+$sizeWidthContent: 1168px;
+$sizeWidthTextContent: 768px;
+
+// Variable needed for xy-grid
+$global-width: $sizeWidthContent;
+
+/**
+ * Font sizes
+ */
+$sizeFontMini: 10px;
+$sizeFontTiny: 12px;
+$sizeFontSmall: 14px;
+$sizeFontRegular: 16px;
+$sizeFontBiggerRegular: 18px;
+$sizeFontMedium: 20px;
+$sizeFontLarge: 24px;
+$sizeFontSmallBig: 28px;
+$sizeFontBig: 32px;
+$sizeFontBiggerBig: 40px;
+$sizeFontSmallHuge: 48px;
+$sizeFontHuge: 56px;
+$sizeFontGiant: 72px;
+
+// Font-Size curves
+$fontSizeCurves: (
+  huge: (
+    tiny: $sizeFontSmallBig,
+    xsmall: $sizeFontBig,
+    small: $sizeFontBiggerBig,
+    medium: $sizeFontSmallHuge,
+    large: $sizeFontHuge,
+    xlarge: $sizeFontGiant,
+  ),
+  big: (
+    tiny: $sizeFontLarge,
+    small: $sizeFontSmallBig,
+    medium: $sizeFontBig,
+    large: $sizeFontBiggerBig,
+    xlarge: $sizeFontSmallHuge,
+  ),
+  large: (
+    tiny: $sizeFontBiggerRegular,
+    medium: $sizeFontLarge,
+    large: $sizeFontSmallBig,
+    xlarge: $sizeFontBig,
+  ),
+  medium: (
+    tiny: $sizeFontBiggerRegular,
+    xsmall: $sizeFontMedium,
+    medium: $sizeFontMedium,
+    large: $sizeFontLarge,
+    xlarge: $sizeFontSmallBig,
+  ),
+  // Leads & Blockquotes
+  biggerRegular:
+    (
+      xsmall: $sizeFontBiggerRegular,
+      small: $sizeFontMedium,
+      large: $sizeFontMedium,
+      xlarge: $sizeFontLarge,
+    ),
+  regular: (
+    tiny: $sizeFontRegular,
+    xsmall: $sizeFontBiggerRegular,
+    large: $sizeFontBiggerRegular,
+    xlarge: $sizeFontMedium,
+  ),
+  small: (
+    tiny: $sizeFontSmall,
+    small: $sizeFontRegular,
+    large: $sizeFontBiggerRegular,
+  ),
+  smallModFontSizeH5H6: (
+    tiny: $sizeFontSmall,
+    small: $sizeFontSmall,
+    medium: $sizeFontRegular,
+    large: $sizeFontRegular,
+    xlarge: $sizeFontBiggerRegular,
+  ),
+  tiny: (
+    xsmall: $sizeFontTiny,
+    small: $sizeFontSmall,
+  ),
+  xsmall: (
+    tiny: $sizeFontTiny,
+    small: $sizeFontSmall,
+    medium: $sizeFontRegular,
+    large: $sizeFontBiggerRegular,
+  ),
+  supersmall: (
+    tiny: $sizeFontTiny,
+    small: $sizeFontSmall,
+    large: $sizeFontRegular,
+  ),
+);
+
+$sizeFontBase: $sizeFontRegular;
+$fontFamilyBase: 'InterRegular', Helvetica, sans-serif;
+$fontFamilyBlack: 'InterBlack', 'Arial Black', Helvetica, sans-serif;
+/**
+ * Line heights
+ */
+$sizeLineHeightNarrower: 1;
+$sizeLineHeightNarrow: 1.2;
+$sizeLineHeightMedium: 1.3;
+$sizeLineHeightBigger: 1.4;
+$sizeLineHeightSubBase: 1.45;
+$sizeLineHeightBase: 1.5;
+$sizeLineHeightSuper: 1.8;
+
+$lineHeightCurves: (
+  nav: (
+    tiny: $sizeLineHeightBase,
+    xsmall: $sizeLineHeightMedium,
+    medium: $sizeLineHeightBigger,
+    xlarge: $sizeLineHeightBase,
+  ),
+);
+
+/**
+ * Breakpoints
+ */
+$sizeBreakpointZero: 0;
+$sizeBreakpointTiny: 320px;
+$sizeBreakpointXSmall: 400px;
+$sizeBreakpointSmall: 600px;
+$sizeBreakpointMedium: 840px;
+$sizeBreakpointLarge: 1024px;
+$sizeBreakpointXLarge: 1280px;
+
+// Size Curves
+$sizeMini: 4px;
+$sizeTiny: 8px;
+$sizeSmallRegular: 12px;
+$sizeRegular: 16px;
+$sizeSmallLarge: 20px;
+$sizeLarge: 24px;
+$sizeSmallBig: 28px;
+$sizeBig: 32px;
+$sizeBiggerBig: 40px;
+$sizeSmallHuge: 48px;
+$sizeHuge: 56px;
+$sizeGiant: 80px;
+
+$sizeCurves: (
+  big: (
+    tiny: $sizeHuge,
+    medium: $sizeGiant,
+  ),
+  large: (
+    tiny: $sizeBiggerBig,
+    medium: $sizeHuge,
+  ),
+  smallerLarge: (
+    tiny: $sizeBig,
+    small: $sizeBiggerBig,
+    xlarge: $sizeHuge,
+  ),
+  medium: (
+    tiny: $sizeLarge,
+    medium: $sizeBig,
+    xlarge: $sizeBiggerBig,
+  ),
+  biggerRegular: (
+    tiny: $sizeSmallLarge,
+    medium: $sizeLarge,
+    xlarge: $sizeBig,
+  ),
+  columnGap: (
+    tiny: $sizeSmallRegular,
+    small: $sizeRegular,
+    medium: $sizeLarge,
+    xlarge: $sizeBig,
+  ),
+  regular: (
+    tiny: $sizeSmallRegular,
+    xsmall: $sizeRegular,
+    medium: $sizeSmallLarge,
+    xlarge: $sizeLarge,
+  ),
+  smallerRegular: (
+    tiny: $sizeRegular,
+    xsmall: $sizeSmallLarge,
+    large: $sizeSmallLarge,
+    xlarge: $sizeLarge,
+  ),
+  small: (
+    tiny: $sizeSmallRegular,
+    xlarge: $sizeRegular,
+  ),
+  tiny: (
+    tiny: $sizeTiny,
+    medium: $sizeSmallRegular,
+    xlarge: $sizeRegular,
+  ),
+  mini: (
+    tiny: $sizeTiny,
+    xlarge: $sizeTiny,
+  ),
+  atomic: (
+    tiny: $sizeMini,
+    medium: $sizeTiny,
+  ),
+);
+
+// Layout Wrapper Spacing
+$wrapperSpacing: (
+  tiny: $sizeSmallRegular,
+  xsmall: $sizeRegular,
+  small: $sizeBig,
+  medium: $sizeBig,
+  large: $sizeBiggerBig,
+);
+
+// Indentation curves
+$indentCurve: (
+  list: (
+    tiny: $sizeRegular,
+    small: $sizeLarge,
+    xlarge: $sizeBig,
+  ),
+  benefits: (
+    tiny: $sizeBig,
+    medium: $sizeBiggerBig,
+  ),
+  quote: (
+    tiny: 18px,
+    xsmall: 22px,
+    small: $sizeLarge,
+  ),
+  quoteParagraph: (
+    tiny: $sizeRegular,
+    medium: $sizeLarge,
+    large: $sizeBig,
+  ),
+);
+
+// used in video and image
+$imageCustomSizes: (
+  headerImageWidth: (
+    tiny: 265px,
+    xsmall: 323px,
+    small: 488px,
+    medium: 678px,
+    large: 828px,
+    xlarge: 1036px,
+  ),
+  headerImageWidthAspect: (
+    tiny: 149px,
+    xsmall: 182px,
+    small: 274px,
+    medium: 381px,
+    large: 466px,
+    xlarge: 583px,
+  ),
+);
+
+// content grid numbers for width calculation
+$gridOffsetColumns: (
+  tiny: 6,
+  small: 10,
+  medium: 9,
+  large: 8,
+);
+
+/**
+ * Breakpoint Variables for Foundation Grid
+ */
+$breakpoints: (
+  tiny: $sizeBreakpointZero,
+  xsmall: $sizeBreakpointXSmall,
+  small: $sizeBreakpointSmall,
+  medium: $sizeBreakpointMedium,
+  large: $sizeBreakpointLarge,
+  xlarge: $sizeBreakpointXLarge,
+);
+
+$grid-margin-gutters: (
+  tiny: $sizeSmallRegular,
+  xsmall: $sizeRegular,
+  medium: $sizeLarge,
+  large: $sizeLarge,
+  xlarge: $sizeBig,
+);
+
+$grid-outer-gutters: (
+  bleed: (
+    tiny: $sizeSmallRegular,
+    xsmall: $sizeRegular,
+    small: $sizeBig,
+    large: $sizeBiggerBig,
+    xlarge: 0,
+  ),
+  contentWidthBleed: (
+    large: math.div($sizeSmallHuge, 2),
+    xlarge: 0,
+  ),
+);
+
+$breakpoint-classes: (tiny xsmall small medium large xlarge);
+
+/**
+ * Custom colors
+ */
+$colorBlack: #000;
+$colorBlack80: #333;
+$colorBlack60: #666;
+$colorBlack40: #949494;
+$colorBlack20: #ccc;
+$colorBlack15: #d9d9d9;
+$colorBlack10: #f0f0f0;
+$colorBlack5: #f7f7f7;
+$colorWhite: #fff;
+
+$colorBlue: #0070b4;
+$colorDarkBlue: #00407c;
+$colorTurqoise: #00797b;
+$colorBordeaux: #b01657;
+$colorMagenta: #d40053;
+$colorViolet: #7f3da7;
+$colorAnthracite: $colorBlack60;
+$colorGreen: #1a7f1f;
+$colorCyan: #009ee0;
+$colorRed: #e2001a;
+
+$colorBlueSoft: #edf5fa;
+$colorDarkBlueSoft: #e0e8ee;
+$colorTurqoiseSoft: #e8f3f2;
+$colorBordeauxSoft: #f6e3ea;
+$colorMagentaSoft: #fcedf3;
+$colorVioletSoft: #ece2f1;
+$colorAnthraciteSoft: $colorBlack10;
+$colorGreenSoft: #ebf6eb;
+
+$colorText: $colorBlack;
+$colorBorderFrameHover: #e4e4e4;
+$colorBg: $colorBlack5;
+
+/**
+ * Color variations
+ */
+$tl-color-variations: (
+  cv-blue: $colorBlue,
+  cv-darkblue: $colorDarkBlue,
+  cv-turqoise: $colorTurqoise,
+  cv-green: $colorGreen,
+  cv-bordeaux: $colorBordeaux,
+  cv-magenta: $colorMagenta,
+  cv-violet: $colorViolet,
+  cv-anthracite: $colorAnthracite,
+  cv-monochrome: $colorBlack,
+);
+
+$tl-color-variations-soft: (
+  cv-blue: $colorBlueSoft,
+  cv-darkblue: $colorDarkBlueSoft,
+  cv-turqoise: $colorTurqoiseSoft,
+  cv-green: $colorGreenSoft,
+  cv-bordeaux: $colorBordeauxSoft,
+  cv-magenta: $colorMagentaSoft,
+  cv-violet: $colorVioletSoft,
+  cv-anthracite: $colorAnthraciteSoft,
+  cv-monochrome: $colorAnthraciteSoft,
+);
+
+/**
+ * Transition and Easings and Timings
+ */
+
+$transitionTimeSimple: 100ms;
+$transitionTimeFade: 200ms;
+$transitionTimeFadeIn: $transitionTimeFade;
+$transitionTimeFadeOut: $transitionTimeFade;
+$transitionTimeDefault: 250ms;
+$transitionTimeMorph: 500ms;
+
+$transitionTimeAreaSmall: 150ms;
+$transitionTimeAreaMedium: 350ms;
+$transitionTimeAreaLarge: 500ms;
+
+$transitionEasingDefault: ease;
+$transitionEasingAccelerate: cubic-bezier(0.2, 0.04, 0.87, 0.62);
+$transitionEasingDecelerate: cubic-bezier(0.01, 0.13, 0.63, 0.99);
+
+/**
+ * Z-Indexes
+ */
+$zIndexInvisible: -1;
+$zIndexInner: 1;
+$zIndexDropDowns: 10;
+$zIndexScaffolds: 100; // for fixed header/ footer
+$zIndexOverlays: 1000;
+$zIndexPreFlyouts: 1099;
+$zIndexFlyouts: 1100;
+$zIndexSkiplinks: 2000;
+$zIndexFlyingFocus: 9998;
+$zIndexFixedHeader: 9999;
+
+// Loading Circle
+$loadingMinHeight: 200px;
+
+$spinnerSize: $sizeFontLarge;
+$spinnerColor: $colorCyan;
+$spinnerBorderSize: 2px;
+
+// Chapter number min-width (Richtext & Linklist)
+$chapterNumberMinWidth: 96px;

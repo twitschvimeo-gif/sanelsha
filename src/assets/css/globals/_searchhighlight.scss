@@ -1,0 +1,13 @@
+.searchhighlight {
+  word-break: keep-all;
+  color: var(--color-accent);
+  background-color: var(--color-accent-soft);
+}
+
+// Invert on modules/atomes that already has the theme-color applied
+.mdl-texthighlight {
+  .searchhighlight {
+    color: var(--color-accent-soft);
+    background-color: var(--color-accent);
+  }
+}

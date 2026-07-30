@@ -1,0 +1,616 @@
+@use 'sass:math';
+
+/* stylelint-disable property-no-vendor-prefix */
+/* stylelint-disable value-no-vendor-prefix */
+$borderWidth: 2px;
+$borderWidthRem: pxToRem($borderWidth);
+$targetInputHeight: 72px - $borderWidth * 2;
+$paddingInput: pxToRem(math.div($targetInputHeight - ($sizeFontRegular * $sizeLineHeightBase), 2));
+
+// VARIABLES FOR SMALL
+$targetSmallInputHeight: 48px - $borderWidth * 2;
+$paddingSmallInput: pxToRem(
+  math.div($targetSmallInputHeight - ($sizeFontRegular * $sizeLineHeightBase), 2)
+);
+
+// VARIABLES FOR FLOATED
+$paddingDifferenceOnFocus: pxToRem(10px);
+
+// VARIABLES FOR SEARCH
+$searchSizeCurve: (
+  font: (
+    tiny: $sizeFontBiggerRegular,
+    large: $sizeFontBig,
+  ),
+  padding: (
+    tiny: math.div($targetSmallInputHeight - ($sizeFontBiggerRegular * $sizeLineHeightBase), 2),
+    large: math.div($targetInputHeight - ($sizeFontBig * $sizeLineHeightBase), 2),
+  ),
+  top: (
+    tiny: $sizeSmallRegular,
+    large: $sizeLarge,
+  ),
+);
+
+// VARIABLES FOR INTERNATIONAL PHONE INPUT
+$triggerWidth: pxToRem(86px);
+
+.atm-form_input {
+  $self: &;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &--margin {
+    margin-bottom: pxToRem($sizeRegular);
+  }
+
+  &__input {
+    font-size: pxToRem($sizeFontRegular);
+    line-height: $sizeLineHeightBase;
+
+    padding: $paddingInput pxToRem($sizeRegular + $sizeLarge + $sizeTiny) $paddingInput
+      pxToRem($sizeRegular);
+
+    display: block;
+    width: 100%;
+
+    border: $borderWidth solid $colorBlack40;
+    border-radius: 2px;
+    order: 1;
+
+    // Remove iOS Shadow
+    -webkit-appearance: none; //stylelint-disable-line
+
+    &:focus {
+      outline: none;
+      border-color: $colorCyan;
+    }
+
+    &:-ms-input-placeholder {
+      color: $colorBlack60;
+    }
+
+    &::placeholder {
+      color: $colorBlack60;
+      opacity: 1;
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      appearance: none;
+      margin: 0;
+    }
+
+    &[type='number'] {
+      -moz-appearance: textfield; // stylelint-disable-line
+    }
+
+    &::-ms-clear {
+      display: none;
+    }
+
+    /* --- DISABLED --- */
+    &:disabled,
+    &[disabled] {
+      background: $colorWhite;
+      border-color: $colorBlack20;
+      color: $colorBlack20;
+
+      &:-ms-input-placeholder {
+        color: $colorBlack20;
+      }
+
+      &::placeholder {
+        color: $colorBlack20;
+      }
+    }
+  }
+
+  &__length-indicator {
+    @include polyFluidSizing(font-size, map-get($fontSizeCurves, tiny));
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 21px);
+    text-align: right;
+    background-color: $colorWhite;
+    margin: 2px 21px 0 2px;
+    padding-top: pxToRem(11px);
+    color: $colorBlack60;
+    min-height: calc(1rem + #{pxToRem(13px)});
+  }
+
+  label {
+    color: $colorBlack60;
+  }
+
+  /* --------------------
+  ------ TEXTAREA -------
+  --------------------- */
+  .atm-form_input__input--textarea {
+    min-height: pxToRem(112px);
+    resize: vertical;
+  }
+
+  /* --------------------
+  ---- W/O FLOATING -----
+  --------------------- */
+
+  &:not(.atm-form_input--floated) {
+    label {
+      @include visuallyhidden;
+    }
+  }
+
+  /* --------------------
+  ----- W FLOATING ------
+  --------------------- */
+
+  &--floated {
+    .atm-form_input__input {
+      &:-ms-input-placeholder {
+        color: transparent;
+      }
+
+      &::placeholder {
+        color: transparent;
+      }
+    }
+
+    .atm-form_input__input--textarea ~ label {
+      top: $borderWidthRem;
+      padding-top: $paddingInput;
+      right: pxToRem($sizeRegular + $sizeGiant);
+
+      @include transition(top padding);
+    }
+
+    label {
+      position: absolute;
+      top: $paddingInput + $borderWidthRem;
+      left: pxToRem($sizeRegular) + $borderWidthRem;
+      pointer-events: none;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      right: (pxToRem($sizeRegular) + pxToRem(24));
+      background: $colorWhite;
+
+      @include transition(top);
+    }
+
+    /* ----- INPUT ON FOCUS/DIRTY ----- */
+    .atm-form_input__input:focus,
+    .atm-form_input__input.dirty {
+      padding-top: $paddingInput + $paddingDifferenceOnFocus;
+      padding-bottom: $paddingInput - $paddingDifferenceOnFocus;
+    }
+
+    /* ----- LABEL ON FOCUS/DIRTY ------ */
+    .atm-form_input__input:focus ~ label,
+    .atm-form_input__input.dirty ~ label {
+      top: pxToRem(14px);
+      transform: translateY(0);
+
+      font-size: $sizeFontTiny;
+
+      font-family: $fontFamilyBlack;
+      color: $colorBlack;
+    }
+
+    // FOR TEXTAREA
+    .atm-form_input__input--textarea:focus ~ label,
+    .atm-form_input__input--textarea.dirty ~ label {
+      top: 2px;
+      padding-top: pxToRem(14px);
+    }
+
+    .atm-form_input__input--textarea:not(:focus):not(.dirty)
+      ~ label.atm-form_input__label--textarea {
+      white-space: initial;
+      -webkit-line-clamp: 3;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    /* ----- LABEL ON FOCUS/DIRTY ------ */
+    .atm-form_input__input:focus ~ .atm-form_input__backdrop,
+    .atm-form_input__input.dirty ~ .atm-form_input__backdrop {
+      display: block;
+    }
+
+    /* ------ Unit ------ */
+    .atm-form_input__input:focus ~ .atm-form_input__unit,
+    .atm-form_input__input.dirty ~ .atm-form_input__unit {
+      opacity: 1;
+    }
+  }
+
+  /* ------------------------------
+  ----- ICON AND FUNCTIONALITY ----
+  ------------------------------- */
+  &__validate-icon,
+  &__functionality {
+    position: absolute;
+    top: $paddingInput + $borderWidthRem;
+    right: pxToRem($sizeRegular);
+
+    span {
+      line-height: 0;
+      display: none;
+    }
+  }
+
+  &__validate-icon--textarea {
+    top: pxToRem(35px);
+    right: pxToRem(21px);
+  }
+
+  &__functionality {
+    display: none;
+    line-height: 0;
+
+    svg use {
+      fill: $colorBlack60;
+    }
+
+    &:hover svg use {
+      fill: $colorBlack;
+    }
+  }
+
+  &__input.dirty ~ &__functionality {
+    display: block;
+  }
+
+  /* --- DECORATIVE ICON --- */
+  &--icon {
+    > .icon {
+      position: absolute;
+      right: pxToRem($sizeRegular);
+
+      top: $paddingInput + $borderWidthRem;
+      pointer-events: none;
+
+      @include transition(top);
+    }
+  }
+
+  /* ---- DEC. ICON ON FOCUS/DIRTY ----- */
+  &__input.dirty ~ svg.icon {
+    display: none;
+  }
+
+  /* ------------------
+  -------- UNIT -------
+  ------------------ */
+
+  &__unit {
+    position: absolute;
+    color: $colorBlack60;
+
+    top: $paddingInput + $borderWidthRem;
+
+    &--right {
+      right: pxToRem($sizeRegular) + $borderWidthRem;
+    }
+
+    .atm-form_input--floated & {
+      opacity: 0;
+      top: $paddingInput + $borderWidthRem + $paddingDifferenceOnFocus;
+    }
+  }
+
+  &--unitLeft {
+    .atm-form_input__unit {
+      left: pxToRem($sizeRegular);
+    }
+  }
+
+  /* ------------------
+  ------ SMALL --------
+  ------------------ */
+
+  &--small {
+    .atm-form_input__input {
+      padding-top: $paddingSmallInput;
+      padding-bottom: $paddingSmallInput;
+    }
+
+    .atm-form_input__validate-icon,
+    .atm-form_input__functionality {
+      top: $paddingSmallInput + $borderWidthRem;
+    }
+
+    > .icon {
+      top: $paddingSmallInput + $borderWidthRem;
+    }
+  }
+
+  /* ------------------
+  -- VALIDATION MSG ---
+  ------------------ */
+  [data-message] {
+    transform: scaleY(0) translateY(-100%);
+    margin: -1px 0 0;
+    padding: pxToRem($sizeMini) pxToRem($sizeRegular);
+    font-size: $sizeFontTiny;
+    line-height: 1.5;
+    background: $colorRed;
+    color: $colorWhite;
+
+    order: 3;
+
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+
+    @include transition(transform);
+
+    display: none;
+
+    &.show {
+      transform: scaleY(1) translateY(0);
+      order: 2;
+
+      display: block;
+    }
+  }
+
+  /* ------------------
+  ----- VALIDATION ----
+  ------------------ */
+  &.invalid {
+    .atm-form_input__input {
+      border-color: $colorRed;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .atm-form_input__validate-icon {
+      span:last-child {
+        display: block;
+      }
+
+      svg use {
+        fill: $colorRed;
+      }
+    }
+  }
+
+  &.valid {
+    .atm-form_input__validate-icon {
+      span:first-child {
+        display: block;
+      }
+
+      svg use {
+        fill: $colorGreen;
+      }
+    }
+  }
+
+  &.valid,
+  &.invalid {
+    label {
+      right: pxToRem($sizeRegular) + pxToRem($sizeLarge) + pxToRem($sizeTiny);
+    }
+
+    .atm-form_input__input--textarea ~ label {
+      right: pxToRem($sizeBig + $sizeGiant);
+      background-color: transparent;
+    }
+
+    .atm-form_input__unit--right {
+      right: pxToRem($sizeRegular * 1.5) + $borderWidthRem + pxToRem(24);
+    }
+  }
+
+  /* ----------------
+  ----- SUCHE -------
+  ----------------- */
+
+  &--search {
+    .atm-form_input__input {
+      font-family: $fontFamilyBlack;
+
+      @include sizeCurve(font-size, font, $searchSizeCurve);
+      @include sizeCurve(padding-top padding-bottom, padding, $searchSizeCurve);
+    }
+
+    .atm-form_input__functionality {
+      @include sizeCurve(top, top, $searchSizeCurve);
+    }
+  }
+
+  /* --------------------
+  --- SELECT TRIGGER ----
+  --------------------- */
+
+  &__input--trigger {
+    min-height: pxToRem($sizeRegular) * $sizeLineHeightBase + (2 * $paddingInput) +
+      (2 * $borderWidthRem);
+
+    .icon {
+      position: absolute;
+      right: $sizeRegular + $borderWidth;
+      top: $paddingInput + $borderWidthRem;
+    }
+  }
+
+  &__trigger-label {
+    position: absolute;
+    top: $paddingInput + $borderWidthRem;
+
+    @include transition(top);
+  }
+
+  &__input--trigger:focus {
+    .atm-form_input__trigger-label {
+      font-family: $fontFamilyBlack;
+      font-size: $sizeFontTiny;
+
+      position: absolute;
+      top: pxToRem(14px);
+    }
+  }
+
+  /* ---------------------
+  - PHONE SELECT TRIGGER -
+  --------------------- */
+  &--trigger-phone {
+    > input {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      height: pxToRem($targetInputHeight);
+      background: none;
+      left: $triggerWidth;
+      width: calc(100% - #{$triggerWidth + $borderWidthRem + 3rem}); // stylelint-disable-line
+      border: none;
+      padding-left: pxToRem($sizeRegular);
+      padding-top: $paddingInput + $paddingDifferenceOnFocus;
+      padding-bottom: $paddingInput - $paddingDifferenceOnFocus;
+      z-index: $zIndexInner;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::-webkit-inner-spin-button,
+      &::-webkit-outer-spin-button {
+        appearance: none;
+        margin: 0;
+      }
+
+      &::-ms-clear {
+        display: none;
+      }
+    }
+
+    .atm-form_input__trigger-label {
+      @include visuallyhidden;
+    }
+
+    > label:not(.visuallyhidden) {
+      top: pxToRem(14px);
+      transform: translateY(0);
+      font-size: $sizeFontTiny;
+      font-family: $fontFamilyBlack;
+      color: $colorBlack;
+      z-index: 1;
+    }
+
+    .atm-form_input__input--trigger {
+      padding-top: $paddingInput + $paddingDifferenceOnFocus;
+      padding-bottom: $paddingInput - $paddingDifferenceOnFocus;
+
+      > .icon {
+        left: $triggerWidth - pxToRem(24);
+        top: $paddingInput + $paddingDifferenceOnFocus;
+      }
+    }
+  }
+
+  /* --------------------
+  ------ REDUCED --------
+  -------------------- */
+
+  &--reduced {
+    display: inline-flex;
+
+    .atm-form_input__input {
+      display: flex;
+      border: 0;
+      padding: 0 pxToRem($sizeBig) 0 0;
+      min-height: pxToRem($sizeBig);
+      align-items: baseline;
+
+      .atm-form_input__trigger-label {
+        display: flex;
+        position: static;
+        top: unset;
+        transition: none;
+        color: $colorBlack60;
+        font-size: $sizeFontSmall;
+        font-family: $fontFamilyBase;
+      }
+
+      .atm-form_input__trigger-value {
+        display: flex;
+        margin-left: pxToRem($sizeRegular);
+      }
+
+      > .icon {
+        right: 0;
+        top: pxToRem($sizeMini);
+      }
+    }
+  }
+
+  /* -------------
+  ------ HINT ----
+  ------------- */
+
+  &__hint {
+    order: 5;
+
+    @include polyFluidSizing(font-size, map-get($fontSizeCurves, tiny));
+
+    color: $colorBlack60;
+    padding-top: $sizeMini;
+    margin: 0;
+  }
+
+  &__backdrop {
+    @include transition(top);
+
+    position: absolute;
+    display: none;
+    top: pxToRem($sizeRegular * 2) + $borderWidthRem;
+    left: pxToRem($sizeRegular) + $borderWidthRem;
+    pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    right: (pxToRem($sizeRegular) + pxToRem(24) + pxToRem($sizeTiny));
+    color: $colorBlack40;
+    background: transparent;
+
+    z-index: $zIndexInner;
+
+    i {
+      opacity: 0;
+    }
+  }
+
+  /** -------------------- */
+  /* STYLING FOR CITY OPTS */
+  /* --------------------- */
+  &__city-options {
+    position: absolute;
+    top: $targetInputHeight + $borderWidth * 2;
+    left: 0;
+    right: 0;
+    background: $colorWhite;
+    display: none;
+
+    .atm-list__item {
+      padding-left: 0;
+    }
+
+    button {
+      height: 100%;
+      width: 100%;
+      padding-left: 0.75rem;
+    }
+  }
+
+  &--show-city-options #{$self}__city-options {
+    z-index: $zIndexDropDowns;
+    display: block;
+  }
+}

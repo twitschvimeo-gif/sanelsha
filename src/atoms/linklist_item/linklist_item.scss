@@ -1,0 +1,214 @@
+.atm-linklist_item {
+  font-family: $fontFamilyBlack;
+  position: relative;
+
+  .icon {
+    min-width: pxToRem(24);
+  }
+
+  @at-root button {
+    @include blankButton;
+  }
+
+  @include polyFluidSizing('font-size', map-get($fontSizeCurves, regular));
+  @include sizeCurve(padding-top padding-bottom, small);
+
+  border-bottom: 2px solid transparent;
+
+  @include transition(color);
+
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+  > span {
+    flex-grow: 1;
+  }
+
+  &:after {
+    display: block;
+    content: ' ';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba($colorText, 0.2);
+    height: 1px;
+
+    transform: translateY(50%) scaleY(1);
+
+    @include transition(transform, $transitionTimeAreaSmall);
+  }
+
+  // Sozialhilfeeintrag (CZHDEV-3005) & Inhaltsverzeichnis (CZHDEV-3178)
+  &--numbered {
+    font-family: $fontFamilyBase;
+
+    &-title {
+      font-family: $fontFamilyBlack;
+    }
+
+    .atm-linklist_item__text {
+      display: flex;
+    }
+
+    .atm-linklist_item__chapter-number {
+      flex-shrink: 0;
+      min-width: pxToRem($chapterNumberMinWidth);
+      padding-right: pxToRem($sizeTiny);
+    }
+
+    @include mq($from: zero, $to: medium) {
+      .atm-linklist_item__arrow {
+        display: none;
+      }
+    }
+  }
+
+  &--e-directory {
+    font-family: $fontFamilyBase;
+  }
+
+  &--download {
+    align-items: flex-start;
+  }
+
+  &--legalfoundation {
+    flex-direction: column;
+
+    .atm-linklist_item__label {
+      margin-top: pxToRem($sizeTiny);
+    }
+
+    .atm-linklist_item__download-button {
+      margin-top: pxToRem($sizeTiny);
+      display: flex;
+      align-items: center;
+      font-family: $fontFamilyBlack;
+      font-size: pxToRem($sizeFontSmall);
+
+      span {
+        font-family: $fontFamilyBase;
+      }
+
+      .icon {
+        margin-right: pxToRem($sizeSmallRegular);
+      }
+    }
+  }
+
+  &--location {
+    font-size: pxToRem($sizeFontRegular);
+
+    .atm-linklist_item__text {
+      color: var(--color-accent);
+    }
+
+    .atm-linklist_item__label {
+      color: var(--color-text-soft);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        .atm-linklist_item__text,
+        .atm-linklist_item__label {
+          color: var(--color-text);
+        }
+      }
+    }
+
+    .atm-linklist_item__distancearrow {
+      height: 100%;
+      min-width: pxToRem($sizeSmallHuge);
+      text-align: right;
+    }
+
+    .atm-linklist_item__distance {
+      font-size: pxToRem($sizeFontTiny);
+      font-family: $fontFamilyBase;
+    }
+  }
+
+  &__arrow {
+    @include sizeCurve(margin-left, tiny);
+  }
+
+  &__download {
+    @include sizeCurve(margin-right, regular);
+  }
+
+  &__text {
+    line-height: 1.33;
+    margin: 0;
+    font-size: inherit;
+
+    > span {
+      display: block;
+      word-break: break-word;
+    }
+
+    &-subtitle {
+      @include polyFluidSizing(font-size, map-get($fontSizeCurves, tiny));
+
+      text-align: right;
+      color: var(--color-text-soft);
+      font-family: $fontFamilyBase;
+    }
+  }
+
+  &__label {
+    @include polyFluidSizing(font-size, map-get($fontSizeCurves, tiny));
+    font-family: $fontFamilyBase;
+  }
+}
+
+/**
+ * Interactive Elements
+ */
+a.atm-linklist_item,
+button.atm-linklist_item {
+  text-decoration: none;
+  color: var(--color-text-soft);
+  cursor: pointer;
+
+  .icon use {
+    fill: var(--color-text-soft);
+    transition: fill $transitionTimeSimple $transitionEasingDefault;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: var(--color-text);
+
+      &:after {
+        transform: translateY(50%) scaleY(3);
+        background: var(--color-text);
+      }
+
+      .icon use {
+        fill: var(--color-text);
+      }
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+/**
+ * When used in an accordion
+ */
+.mdl-accordion .mdl-linklist--last,
+.mdl-accordion .mdl-download_list--last {
+  li:last-child {
+    .atm-linklist_item {
+      border-bottom: 0;
+
+      &:after {
+        display: none;
+      }
+    }
+  }
+}

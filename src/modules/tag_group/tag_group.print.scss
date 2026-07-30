@@ -1,0 +1,13 @@
+.mdl-tag-group {
+  &--wrapped {
+    background-color: initial;
+  }
+
+  .atm-heading {
+    color: $colorText;
+  }
+
+  .atm-anchorlink--tag.atm-anchorlink--inverted:not(.atm-anchorlink--active) {
+    background-color: var(--color-accent);
+  }
+}

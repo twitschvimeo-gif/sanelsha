@@ -1,0 +1,78 @@
+<div class="mdl-flex-data" data-init="flexData" data-source="{{ flexDataSource }}" {{#if initialLoad}}data-initial-load="true"{{/if}}>
+  {{#if title}}
+    <h{{headingLevel}} class="atm-heading
+      {{#if_compare visualHeadingLevel "!==" headingLevel}}h{{visualHeadingLevel}}{{/if_compare}}
+      {{#if_compare visualHeadingLevel "===" 2 }}atm-heading--bordered{{/if_compare}}"
+    >{{title}}</h{{headingLevel}}>
+  {{/if}}
+  <div class="mdl-flex-data__form">
+    <form novalidate>
+      {{#if flexTableFormData}}
+        {{> "modules/form/form" flexTableFormData }}
+      {{/if}}
+      {{#if flexGenericFormData}}
+        {{> "modules/form/form" flexGenericFormData }}
+      {{/if}}
+      <div class="mdl-flex-data__form-controls">
+        <button data-clear-flex type="button" class="atm-button atm-button--secondary hidden">Zurücksetzen</button>
+        <button data-search-flex type="button" class="atm-button ">Suchen</button>
+      </div>
+    </form>
+  </div>
+  <div class="mdl-flex-data__results initially-hidden" data-result-count-title="{{resultCountTitle}}" data-no-results-title="{{noResultsTitle}}" data-result-count-title-more="{{resultCountTitleMore}}" aria-live="polite">
+    <script data-flex-template type="text/x-handlebars-template">
+      {{#if tableData}}
+        {{#each tableData.headers}}
+          {{#if @first}}
+            <th scope="row" class="mdl-table__cell" data-table="cell"><%=text{{@index}}%></th>
+          {{else}}
+            <td class="mdl-table__cell" data-table="cell"><%=text{{@index}}%></td>
+          {{/if}}
+          {{#if @last}}
+            <td class="mdl-table__cell" data-table="cell"><a href="<%=link%>" class="atm-text_link">Details</a></td>
+          {{/if}}
+        {{/each}}
+      {{/if}}
+      {{#unless tableData}}
+        {{{genericTemplate}}}
+      {{/unless}}
+    </script>
+    <h3 class="visuallyhidden" aria-live="polite">Resultate</h3>
+    {{#if tableData}}
+      {{> "modules/table/table" tableData }}
+    {{/if}}
+    {{#unless tableData}}
+      <div class="mdl-flex-data__generic-sort">
+        <h4 class="visuallyhidden">Sortierung</h4>
+        <div class="atm-form_input atm-form_input--trigger atm-form_input--reduced">
+          <button aria-expanded="false" aria-haspopup="true" class="mdl-flex-data__generic-sort-dropdown atm-form_input__input atm-form_input__input--trigger">
+            <span class="atm-form_input__trigger-label">Sortieren nach:</span>
+            <span class="atm-form_input__trigger-value">Relevanz</span>
+            <svg class="icon" focusable="false">
+              <use xlink:href="#angle_drop_down"></use>
+            </svg>
+          </button>
+        </div>
+        {{> "modules/context_menu/context_menu" sortContextMenu}}
+      </div>
+      <h3 class="atm-heading mdl-flex-data__results-title"></h3>
+      <div class="mdl-flex-data__results-generic" data-sort-direction="descending" data-sort-column="publicationDate"></div>
+    {{/unless}}
+    <div class="mdl-flex-data__pagination">
+      {{> "modules/pagination/pagination" pagination }}
+    </div>
+    {{> "atoms/loading_circle/loading_circle"}}
+  </div>
+  {{#if flexTableOfContents}}
+    <!--
+      AEM generated div for LSG demonstration purpos only.
+      DO NOT COPY!
+    -->
+    <div>
+      {{> "modules/accordion/accordion" flexTableOfContents }}
+    </div>
+  {{/if}}
+  <div class="mdl-flex-data__notification hidden">
+    {{> "modules/notification/notification" notificationData }}
+  </div>
+</div>

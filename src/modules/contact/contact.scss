@@ -1,0 +1,101 @@
+$colorWhite70: rgba($colorWhite, 0.7);
+
+@media screen {
+  .mdl-contact {
+    --color-text: #{$colorWhite};
+    --color-text-soft: var(--color-accent-soft);
+    --color-bg: var(--color-accent);
+  }
+}
+
+.mdl-contact {
+  @include sizeCurve(margin-bottom, big);
+  padding: pxToRem($sizeHuge) 0;
+
+  padding-inline: pxToRem($sizeSmallRegular);
+  background-color: var(--color-accent);
+  color: var(--color-text);
+
+  &--fullwidth {
+    @include gridBleed($fullwidth: true);
+    margin-bottom: 0;
+  }
+
+  a,
+  .atm-text_link {
+    color: $colorWhite;
+    border-color: $colorWhite;
+
+    &:hover {
+      color: $colorWhite70;
+      border-color: $colorWhite70;
+    }
+  }
+
+  .atm-heading.atm-heading--bordered {
+    @include polyFluidSizing('font-size', map-get($fontSizeCurves, big));
+    line-height: $sizeLineHeightMedium;
+    margin-bottom: pxToRem($sizeLarge);
+    padding-top: pxToRem($sizeSmallRegular);
+
+    @include mq($from: xlarge) {
+      padding-top: pxToRem($sizeRegular);
+      margin-bottom: pxToRem($sizeBiggerBig);
+      line-height: $sizeLineHeightNarrower;
+    }
+  }
+
+  h2.atm-heading--bordered {
+    margin-top: 0;
+  }
+
+  .mdl-contact_entry + .mdl-accordion--contact {
+    @include sizeCurve(margin-top, medium);
+  }
+
+  // overwrite default for first child
+  .mdl-accordion__item:first-child:before {
+    display: none;
+  }
+
+  /*
+  * Media Queries SMALL
+  */
+  @include mq($from: small) {
+    &:not(.mdl-contact--fullwidth) {
+      padding-inline: 0;
+
+      > * {
+        @include gridNestedOffset('margin-left', 1, $gridOffsetColumns);
+        @include gridNestedOffset('margin-right', 1, $gridOffsetColumns);
+      }
+    }
+  }
+
+  /*
+   * Media Queries MEDIUM
+   */
+  @include mq($from: medium) {
+    padding-inline: 0;
+
+    .atm-heading.atm-heading--bordered {
+      margin-bottom: pxToRem($sizeBig);
+    }
+  }
+
+  /*
+   * Media Queries XLARGE
+   */
+  @include mq($from: xlarge) {
+    .atm-heading.atm-heading--bordered {
+      padding-top: pxToRem($sizeRegular);
+      margin-bottom: pxToRem($sizeBiggerBig);
+    }
+
+    &--fullwidth {
+      .mdl-contact__cell-icon {
+        margin-top: 0;
+      }
+    }
+  }
+}

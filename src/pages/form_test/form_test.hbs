@@ -1,0 +1,19 @@
+{{#extend "layouts/layout"}}
+  {{#content "pageheader"}}
+    {{> "modules/page_header/page_header" props.modules.pageHeaderData }}
+  {{/content}}
+
+  {{#content "content"}}
+    <h2 class="atm-heading">Section</h2>
+    {{> "modules/stepper/stepper" props.modules.stepper }}
+  {{/content}}
+
+  {{#content "pagefooter"}}
+    {{> "modules/contact/contact" props.modules.contact}}
+  {{/content}}
+
+  {{#content "footer"}}
+    {{> "modules/footer/footer" props.modules.footerData }}
+  {{/content}}
+{{/extend}}
+

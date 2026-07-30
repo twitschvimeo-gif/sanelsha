@@ -1,0 +1,48 @@
+<div class="mdl-biometrie_appointment__wrapper" data-init="biometrieAppointment" data-biometrie_appointment_settings='{
+                "apiBase": "{{moduleSettings.apiBase}}",
+                "attemptsBeforeTelephone": {{ moduleSettings.attemptsBeforeTelephone }},
+                "calendarLinkProperties": {
+                    "title": "{{ moduleSettings.calendarLinkProperties.title }}",
+                    "location": "{{ moduleSettings.calendarLinkProperties.location }}",
+                    "description": "{{ moduleSettings.calendarLinkProperties.description }}",
+                    "htmlDescription": "{{ moduleSettings.calendarLinkProperties.htmlDescription }}"
+                }
+            }'>
+  <div class="mdl-biometrie_appointment">
+
+    <div class="mdl-biometrie_appointment__toplinks">
+      <div class="mdl-biometrie_appointment__toplinks-left">
+        {{> "atoms/text_link/text_link" backLink }}
+      </div>
+      <div class="mdl-biometrie_appointment__toplinks-right">
+        {{> "atoms/text_link/text_link" logoutLink }}
+      </div>
+    </div>
+
+    <!--  LOGIN -->
+    <div class="view" data-biometrie_appointment="view__login">
+      {{> "modules/biometrie_appointment/partials/login_view/login_view" loginViewProps}}
+    </div>
+
+    <!--  DETAILS -->
+    <div class="view" data-biometrie_appointment="view__details">
+      {{> "modules/biometrie_appointment/partials/details_view/details_view" detailsViewProps}}
+    </div>
+
+    <!--  RESCHEDULING -->
+    <div class="view" data-biometrie_appointment="view__reschedule">
+      {{> "modules/biometrie_appointment/partials/reschedule_view/reschedule_view" rescheduleViewProps}}
+    </div>
+
+    <div class="mdl-biometrie_appointment__loading-spinner show" data-biometrie_appointment="loading-spinner">
+      <div class="atm-dual-ring"></div>
+    </div>
+
+    <div class="mdl-biometrie_appointment__unavailable-alert" data-biometrie_appointment="unavailable-alert">
+      {{> "modules/notification/notification" unavailableNotificationData }}
+    </div>
+  </div>
+  <div class="mdl-biometrie_appointment__contact" data-biometrie_appointment="contact">
+    {{> "modules/contact/contact" contactData }}
+  </div>
+</div>

@@ -1,0 +1,151 @@
+.atm-content_teaser {
+  display: block;
+
+  padding: pxToRem($sizeSmallRegular) 0 pxToRem($sizeRegular);
+  box-sizing: border-box;
+  flex-basis: 100%;
+
+  line-height: $sizeLineHeightBase;
+  position: relative;
+  cursor: pointer;
+  color: var(--color-text-soft);
+  text-decoration: none;
+
+  .bold {
+    font-family: $fontFamilyBlack;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+
+    @include transition(all);
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 1px;
+    background-color: $colorBlack20;
+    transform: scaleY(1);
+  }
+
+  &:hover,
+  &:focus {
+    .atm-content_teaser__title,
+    .atm-content_teaser__content {
+      color: var(--color-text);
+    }
+
+    &:after {
+      background-color: var(--color-text);
+      transform: scaleY(3);
+    }
+  }
+
+  &__title {
+    font-family: $fontFamilyBlack;
+    color: var(--color-accent);
+  }
+
+  &__content {
+    @include polyFluidSizing(font-size, map-get($fontSizeCurves, regular));
+
+    overflow-y: hidden;
+    display: block;
+    color: var(--color-text-soft);
+  }
+
+  /** Promotopic variation */
+  &--promo {
+    @include sizeCurve(padding-left padding-right, regular);
+
+    background: var(--color-accent);
+
+    .atm-content_teaser__title {
+      color: var(--color-bg);
+    }
+
+    .atm-content_teaser__content {
+      color: var(--color-accent-soft);
+      display: flex;
+      flex-direction: column;
+    }
+
+    &:hover,
+    &:focus {
+      .atm-content_teaser__title,
+      .atm-content_teaser__content {
+        color: var(--color-bg);
+      }
+    }
+
+    &:after {
+      display: none;
+    }
+  }
+
+  &--tagged {
+    .atm-content_teaser__title {
+      display: block;
+    }
+  }
+
+  &[disabled='disabled'] {
+    cursor: default;
+    pointer-events: none;
+
+    .atm-content_teaser__title {
+      color: var(--color-text) !important; //stylelint-disable-line
+    }
+  }
+
+  /** Styles for inverted use */
+  .cv-inverted &,
+  [class*='--inverted'] & {
+    .atm-content_teaser__title {
+      color: var(--color-text);
+    }
+
+    .atm-content_teaser__content {
+      color: var(--color-text-soft);
+    }
+
+    &:after {
+      background-color: var(--color-accent-soft);
+    }
+
+    &:hover,
+    &:focus {
+      .atm-content_teaser__title,
+      .atm-content_teaser__content {
+        color: var(--color-text);
+      }
+
+      &:after {
+        background-color: var(--color-text);
+      }
+    }
+
+    &.atm-content_teaser--promo {
+      background: var(--color-text);
+
+      .atm-content_teaser__title {
+        color: var(--color-accent);
+      }
+
+      .atm-content_teaser__content {
+        color: $colorBlack60;
+      }
+
+      &:hover,
+      &:focus {
+        .atm-content_teaser__title,
+        .atm-content_teaser__content {
+          color: $colorBlack;
+        }
+      }
+    }
+  }
+}
