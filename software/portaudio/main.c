@@ -1,4 +1,4 @@
-#include <strings.h>
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stddef.h>
@@ -57,15 +57,15 @@ int run(PaDeviceIndex inIndex) {
 
     PaStreamParameters inputParameters;
     PaStream *stream;
-    int NUM_CHANNELS = 1;
-    double SAMPLE_RATE = 44100;
-    int FRAMES_PER_BUFFER = 100;
-    PaSampleFormat PA_SAMPLE_TYPE = paFloat32;
+    const int numChannels = 1;
+    const double sampleRate = 44100;
+    const unsigned long framesPerBuffer = 100;
+    const PaSampleFormat sampleType = paFloat32;
 
-    float sampleBlock[FRAMES_PER_BUFFER];
+    float sampleBlock[framesPerBuffer];
 
     /* -- setup input -- */
-    bzero( &inputParameters, sizeof( inputParameters ) );
+    memset( &inputParameters, 0, sizeof( inputParameters ) );
     if( inIndex < 0 ) {
         inIndex = Pa_GetDefaultInputDevice();
     }
@@ -75,8 +75,8 @@ int run(PaDeviceIndex inIndex) {
         return 1;
     }
     inputParameters.device = inIndex;
-    inputParameters.channelCount = NUM_CHANNELS;
-    inputParameters.sampleFormat = PA_SAMPLE_TYPE;
+    inputParameters.channelCount = numChannels;
+    inputParameters.sampleFormat = sampleType;
     const PaDeviceInfo *deviceInfo = Pa_GetDeviceInfo( inputParameters.device );
     if( deviceInfo == NULL ) {
         fprintf(stderr, "Invalid input device index: %d\n", inputParameters.device);
@@ -95,8 +95,8 @@ int run(PaDeviceIndex inIndex) {
         &stream,
         &inputParameters,
         NULL,
-        SAMPLE_RATE,
-        0,
+        sampleRate,
+        framesPerBuffer,
         paClipOff,      /* we won't output out of range samples so don't bother clipping them */
         NULL, /* no callback, use blocking API */
         NULL ); /* no callback, so no callback userData */
@@ -116,18 +116,18 @@ int run(PaDeviceIndex inIndex) {
     }
     printf("Wire on. Will run one minute.\n"); fflush(stdout);
 
-    printf("FRAMES_PER_BUFFER=%d\n", FRAMES_PER_BUFFER);
+    printf("framesPerBuffer=%lu\n", framesPerBuffer);
 
     /* -- Read audio and feed the VU meter -- */
-    for( int i=0; i<(60*SAMPLE_RATE)/FRAMES_PER_BUFFER; ++i )
+    for( int i=0; i<(int)((60*sampleRate)/framesPerBuffer); ++i )
     {
-        err = Pa_ReadStream( stream, sampleBlock, FRAMES_PER_BUFFER );
+        err = Pa_ReadStream( stream, sampleBlock, framesPerBuffer );
         if( err != paNoError ) {
             fprintf(stderr, "Error reading stream: %s\n", Pa_GetErrorText(err));
             break;
         }
 
-        vu_meter_on_sample(inputParameters.channelCount, FRAMES_PER_BUFFER, (float *)sampleBlock);
+        vu_meter_on_sample(inputParameters.channelCount, (int)framesPerBuffer, sampleBlock);
     }
     /* -- Now we stop the stream -- */
     err = Pa_StopStream( stream );

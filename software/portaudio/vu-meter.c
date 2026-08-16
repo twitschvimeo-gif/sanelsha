@@ -5,7 +5,7 @@
 
 static const int lights_per_dB = 3;
 static const int light_count = 10;
-static char stars[10 + 1]; // must match light_count
+static char stars[10 + 1]; /* must match light_count */
 
 void vu_meter_init() {
     int i;
@@ -17,27 +17,28 @@ void vu_meter_init() {
 
 void vu_meter_on_sample(int channels, int count, float *buffer) {
     (void)channels;
-    float sum = 0;
-    float volume = 0;
+    float sum = 0.0f;
+    float volume = 0.0f;
 
     if( count <= 0 ) {
         return;
     }
 
     for(int i = 0; i < count; i++) {
-        sum += pow(buffer[i], 2);
+        float sample = buffer[i];
+        sum += sample * sample;
     }
 
     /* RMS level in dBFS */
-    volume = 20 * log10(sqrt(sum / count));
+    volume = 20.0f * log10f(sqrtf(sum / (float)count));
 
     const float origVolume = volume;
 
     /* Map volume onto 0..light_count bars (lights_per_dB steps) */
-    volume += (light_count * lights_per_dB);
-    volume = fmax(0, volume);
-    volume /= lights_per_dB;
-    int v = (int)fmin(volume, light_count);
+    volume += (float)(light_count * lights_per_dB);
+    volume = fmaxf(0.0f, volume);
+    volume /= (float)lights_per_dB;
+    int v = (int)fminf(volume, (float)light_count);
     printf("%6.2f %d %s\n", origVolume, v, stars + (light_count - v));
 }
 
